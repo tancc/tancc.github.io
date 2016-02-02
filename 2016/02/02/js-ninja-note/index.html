@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>忍者：Javascript開發技巧探究 筆記 | Tan&#39;s note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。
+first-class object在JS中函式是first-class object，什麼是first-class object？
+
+可透過字面值(literal)產生
+可將函式存放在變數中
+可作為函式的參數
+可作為函式回傳值
+擁有property">
+<meta property="og:type" content="article">
+<meta property="og:title" content="忍者：Javascript開發技巧探究 筆記">
+<meta property="og:url" content="http://tancc.github.io/blog/2016/02/02/js-ninja-note/index.html">
+<meta property="og:site_name" content="Tan's note">
+<meta property="og:description" content="內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。
+first-class object在JS中函式是first-class object，什麼是first-class object？
+
+可透過字面值(literal)產生
+可將函式存放在變數中
+可作為函式的參數
+可作為函式回傳值
+擁有property">
+<meta property="og:updated_time" content="2016-02-02T06:31:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="忍者：Javascript開發技巧探究 筆記">
+<meta name="twitter:description" content="內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。
+first-class object在JS中函式是first-class object，什麼是first-class object？
+
+可透過字面值(literal)產生
+可將函式存放在變數中
+可作為函式的參數
+可作為函式回傳值
+擁有property">
+  
+    <link rel="alternate" href="/atom.xml" title="Tan&#39;s note" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css" type="text/css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog" id="logo">Tan&#39;s note</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/tancc">Github</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tancc.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-js-ninja-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2016/02/02/js-ninja-note/" class="article-date">
+  <time datetime="2016-02-02T04:16:37.000Z" itemprop="datePublished">2016-02-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      忍者：Javascript開發技巧探究 筆記
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <p>內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。<br>這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。</p>
+<h1 id="first-class_object"><a href="#first-class_object" class="headerlink" title="first-class object"></a>first-class object</h1><p>在JS中函式是first-class object，什麼是first-class object？</p>
+<ul>
+<li>可透過字面值(literal)產生</li>
+<li>可將函式存放在變數中</li>
+<li>可作為函式的參數</li>
+<li>可作為函式回傳值</li>
+<li>擁有property</li>
+</ul>
+<hr>
+<h1 id="function_overloading_uFF08_u91CD_u8F09_uFF09"><a href="#function_overloading_uFF08_u91CD_u8F09_uFF09" class="headerlink" title="function overloading（重載）"></a>function overloading（重載）</h1><p>重載就是根據參數的類型、數量、或特定參數的存在執行不同任務。<br>而若想根據參數的數量執行不同任務，最直覺的方法是<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ninja = &#123;</span><br><span class="line">  whatever: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (<span class="built_in">arguments</span>.length) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">        <span class="comment">/* 做事情 */</span></span><br><span class="line">        <span class="keyword">break</span>;  </span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="comment">/* 做別的事情 */</span></span><br><span class="line">        <span class="keyword">break</span>;  </span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        <span class="comment">/* 做別的其他事情 */</span></span><br><span class="line">        <span class="keyword">break</span>;  </span><br><span class="line">      <span class="comment">//以此類推...</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>很明顯可以看到，當case一多這種寫法會拖非常長，看起來比較不簡潔。</p>
+<p>而書中介紹另一種做法，則會是下面這種形式。先建立物件，然後將加入重載函式到其中。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ninja =&#123;&#125;;</span><br><span class="line">addMethod(ninja, <span class="string">'whatever'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="comment">/* 做事情 */</span>&#125;);</span><br><span class="line">addMethod(ninja, <span class="string">'whatever'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;<span class="comment">/* 做別的事情 */</span>&#125;);</span><br><span class="line">addMethod(ninja, <span class="string">'whatever'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>)</span>&#123;<span class="comment">/* 做別的其他事情 */</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>比起來相當簡潔俐落，而<code>addMethod</code>是長這樣的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addMethod</span>(<span class="params">object, name, fn</span>) </span>&#123;         <span class="comment">// 所需參數為：物件、物件中屬性名稱、要綁定的函式</span></span><br><span class="line">  <span class="keyword">var</span> old = object[name];                      <span class="comment">// 儲存之前的函式     </span></span><br><span class="line">    object[name] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;                 <span class="comment">// 建立新的匿名函式</span></span><br><span class="line">        <span class="keyword">if</span> (fn.length == <span class="built_in">arguments</span>.length)     <span class="comment">// 若呼叫函式時，傳入的參數數量與函式定義時的數量相同  </span></span><br><span class="line">            <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)   <span class="comment">// 使用此函式    </span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> old == <span class="string">'function'</span>)      </span><br><span class="line">            <span class="keyword">return</span> old.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>); <span class="comment">// 若不同則回頭找舊函式，並參數重做比對過程   </span></span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>這個例子很漂亮的利用closure使每次傳入的匿名函式能存取<code>old</code>和<code>fn</code>來達到重載功能，使整體的維護性更好。<br>不過缺點就是耗費的記憶體會較多，且整體運作效能比較不好，因為每一次都會從最後重載的函式開始多次呼叫、往回找，若高效能不是主要的考量因素時，整體而言還是利大於弊的。</p>
+<hr>
+<h1 id="u8B93_u51FD_u5F0F_u81EA_u6211_u8A18_u61B6"><a href="#u8B93_u51FD_u5F0F_u81EA_u6211_u8A18_u61B6" class="headerlink" title="讓函式自我記憶"></a>讓函式自我記憶</h1><p>讓函式有記住先前運算過的值，以提升運行速度。但是會佔用記憶體。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Function.prototype.memoized = function(key)&#123;&#10;  this._values = this._values || &#123;&#125;;         //&#24314;&#31435;&#24555;&#21462;&#10;  return this._values[key] !== undefined ?   //&#27298;&#26597;&#26159;&#21542;&#26377;&#22312;&#24555;&#21462;&#20839;&#65292;&#33509;&#27794;&#26377;&#21063;&#22519;&#34892;&#21407;&#20989;&#24335;&#10;    this._values[key] :&#10;    this._values[key] = this.apply(this, arguments);&#10;&#125;;&#10;&#10;function isPrime(value) &#123;&#10;  var prime = value != 1&#10;  for (var i = 2; i &#60; value; i ++)&#123;&#10;    if(value % i == 0)&#123;&#10;      prime = false;&#10;      break;&#10;    &#125;&#10;  &#125;&#10;  return prime;&#10;&#125;&#10;&#10;isPrime.memoized(71);  // true&#10;isPrime._values;       // &#123;&#39;71&#39;: true&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到計算過的東西都會儲存在<code>_values</code>內，如果下次有相同的數值要判斷時會先到快取內找，沒有在快取內才會進行函式運算。<br>但此方法缺點是每次都要<code>isPrime.memoized(..)</code>，十分麻煩。因此我們可以將<code>isPrime</code>和<code>memoized</code>綁在一起。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.memoize = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>;                        </span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;                           </span><br><span class="line">    <span class="keyword">return</span> fn.memoized.apply( fn, <span class="built_in">arguments</span> );</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> isPrime = (<span class="function"><span class="keyword">function</span> (<span class="params">num</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//內容和上述isPrime函式一樣</span></span><br><span class="line">&#125;).memoize();</span><br><span class="line"></span><br><span class="line">isPrime(<span class="number">71</span>);        <span class="comment">// true</span></span><br><span class="line">isPrime._values;    <span class="comment">// &#123;'71': true&#125;</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="IIFE__28_u7ACB_u5373_u51FD_u5F0F_29"><a href="#IIFE__28_u7ACB_u5373_u51FD_u5F0F_29" class="headerlink" title="IIFE (立即函式)"></a>IIFE (立即函式)</h1><p>立即函式的形式會長這樣<code>(...)()</code>，第一的括號內是放函式，而第二個括號是運算子也就是執行函式<br>在JS中很常使用到，書中介紹他幾個好處</p>
+<ul>
+<li><h3 id="u66AB_u6642_u6027_u7BC4_u570D_u8207_u79C1_u6709_u8B8A_u6578"><a href="#u66AB_u6642_u6027_u7BC4_u570D_u8207_u79C1_u6709_u8B8A_u6578" class="headerlink" title="暫時性範圍與私有變數"></a>暫時性範圍與私有變數</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> numClicks = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">document</span>.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert( ++numClicks )</span><br><span class="line">  &#125;, <span class="literal">false</span>);</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>立即函數製造出一個scope，由於closure的原因，只有eventHandler可以取用numClicks，外面的任何人都不能存取numClicks</p>
+<ul>
+<li><h3 id="u4F7F_u7528_u77ED_u540D_u8B93_u7A0B_u5F0F_u66F4_u5177_u6709_u53EF_u8B80_u6027"><a href="#u4F7F_u7528_u77ED_u540D_u8B93_u7A0B_u5F0F_u66F4_u5177_u6709_u53EF_u8B80_u6027" class="headerlink" title="使用短名讓程式更具有可讀性"></a>使用短名讓程式更具有可讀性</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">v</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">Object</span>.extend(v, &#123;</span><br><span class="line">    href: v._getAttr,</span><br><span class="line">    src:  v._getAttr,</span><br><span class="line">    ...</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;)(Element.attributeTranslations.read.values)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>若不使用立即函式，每次都需要使用超長的一串變數名，會使程式碼比較難看。</p>
+<ul>
+<li><h3 id="u8FF4_u5708"><a href="#u8FF4_u5708" class="headerlink" title="迴圈"></a>迴圈</h3>解決使用迴圈和閉包時碰到的問題，算是很經典的例子<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">  (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>)</span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(i)</span><br><span class="line">    &#125;,i*<span class="number">1000</span>);</span><br><span class="line">  &#125;)(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果沒用立即函式包起來直接用setTimeout印出的數值都會是10。</p>
+<ul>
+<li><h3 id="u7A0B_u5F0F_u5EAB_u5305_u88F9"><a href="#u7A0B_u5F0F_u5EAB_u5305_u88F9" class="headerlink" title="程式庫包裹"></a>程式庫包裹</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> jQuery = <span class="built_in">window</span>.jQuery = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//初始化</span></span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>此處先將匿名函式指派給全域變數<code>window.jQuery</code>，再將他指派給區域變數<code>jQuery</code>。如此一來就算外界程式把將<code>jQuery</code>此全域變數做了修改，也不會影響到立即函式中程式庫的程式邏輯。</p>
+<hr>
+<h1 id="Prototype_28_u539F_u578B_29"><a href="#Prototype_28_u539F_u578B_29" class="headerlink" title="Prototype(原型)"></a><a href="/blog/2016/01/24/javascript-oo/">Prototype(原型)</a></h1><p>書中原型部分其實有些錯誤，另外找了資料做了這份紀錄</p>
+<hr>
+<h1 id="Partial_application__u548C_Currying"><a href="#Partial_application__u548C_Currying" class="headerlink" title="Partial application 和 Currying"></a><a href="/blog/2016/01/29/js-partial-curry/">Partial application 和 Currying</a></h1><p>這部分另外在這篇簡單介紹</p>
+<hr>
+<h1 id="u8A08_u6642_u5668__28setTimeout_2C_setInterval_29"><a href="#u8A08_u6642_u5668__28setTimeout_2C_setInterval_29" class="headerlink" title="計時器 (setTimeout, setInterval)"></a>計時器 (setTimeout, setInterval)</h1><ul>
+<li><p>由於js是單線程，<code>setTimeout</code>內的程式開始時間會比設定的還久，<code>setInterval</code>執行的間隔可能比設定的還短。<br>建立”執行間隔至少100毫秒”的實作方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">repeatMe</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//do something</span></span><br><span class="line">  setTimeout(repeatMe, <span class="number">100</span>);</span><br><span class="line">&#125;,<span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>當程式裡用到大量的計時器(ex 動畫)時，由於garbage collection機制去回收不再使用的計時器時，會使瀏覽器卡住<br>建立計時器控管中心，使同時間只有一個計時器存在、可隨時暫停計時器、簡化任務移除程序</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timers = &#123;</span><br><span class="line">  timerID: <span class="number">0</span>,</span><br><span class="line">  timers: [],</span><br><span class="line"></span><br><span class="line">  add: <span class="function"><span class="keyword">function</span> (<span class="params">fn</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.timers.push(fn);</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  start: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.timerID) <span class="keyword">return</span>;</span><br><span class="line">    (<span class="function"><span class="keyword">function</span> <span class="title">runNext</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(timers.timers.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; timers.timers.length; i++) &#123;</span><br><span class="line">          <span class="keyword">if</span> (timers.timers[i]() === <span class="literal">false</span>) &#123;</span><br><span class="line">            timers.timers.splice(i,<span class="number">1</span>);</span><br><span class="line">            i--;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        timers.timerID = setTimeout(runNext, <span class="number">0</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)();</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  stop: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    clearTimeout(<span class="keyword">this</span>.timerID);</span><br><span class="line">    <span class="keyword">this</span>.timerID = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//index.html</span></span><br><span class="line"><span class="keyword">var</span> box = <span class="built_in">document</span>.getElementById(<span class="string">"box"</span>), x = <span class="number">0</span>, y = <span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">timers.add(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  box.style.left = x + <span class="string">"px"</span>;</span><br><span class="line">  <span class="keyword">if</span> (++x &gt; <span class="number">50</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">timers.add(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  box.style.top = y + <span class="string">"px"</span>;</span><br><span class="line">  y += <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">if</span> (y &gt; <span class="number">120</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">timers.start();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>當中使用<code>add</code>來增加要執行的任務，當回傳false時自動刪除此任務。使用<code>start</code>來執行所有任務，<code>stop</code>來刪除計時器。</p>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tancc.github.io/blog/2016/02/02/js-ninja-note/" data-id="cik513cg9000jnza24zneazfq" class="article-share-link">Share</a>
+      
+        <a href="http://tancc.github.io/blog/2016/02/02/js-ninja-note/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2016/01/29/js-partial-curry/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">partial application 和 currying</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ec2/">ec2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/aws/" style="font-size: 15px;">aws</a> <a href="/blog/tags/ec2/" style="font-size: 15px;">ec2</a> <a href="/blog/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/blog/tags/linux/" style="font-size: 15px;">linux</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2016/02/02/js-ninja-note/">忍者：Javascript開發技巧探究 筆記</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/01/29/js-partial-curry/">partial application 和 currying</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/01/26/ec2同步本地端檔案/">ec2同步本地端檔案</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/01/24/javascript-oo/">JS中的物件導向</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/01/20/javascript常見誤區/">Javascript常見誤區</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Tan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/tancc" class="mobile-nav-link">Github</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'tansnote';
+  
+  var disqus_url = 'http://tancc.github.io/blog/2016/02/02/js-ninja-note/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/blog/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
