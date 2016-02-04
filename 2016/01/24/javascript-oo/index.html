@@ -17,7 +17,7 @@ JS中的原型物件導向">
 本文章內容包括
 
 JS中的原型物件導向">
-<meta property="og:updated_time" content="2016-02-03T17:03:29.000Z">
+<meta property="og:updated_time" content="2016-02-04T03:42:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS中的物件導向">
 <meta name="twitter:description" content="這幾天重新認識了JS中物件導向的一些概念，尤其是prototype這塊的概念。在ES6中加入了class但並不代表JS就有了類別，他只是個語法糖背後還是prototype-based，而且使用class背後其實還會有一些隱憂存在著，若一開始就直接使用class其實會對JS有一些錯誤的認知(我就是這樣…)，而使用class以什麼缺點，以後可能會再寫一篇來紀錄。
@@ -123,7 +123,7 @@ JS中的原型物件導向">
 </li>
 </ul>
 <hr>
-<h1 id="prototype__uFF08_u539F_u578B_uFF09"><a href="#prototype__uFF08_u539F_u578B_uFF09" class="headerlink" title="prototype （原型）"></a>prototype （原型）</h1><p>首先，prototype是JS中很重要的概念。那prototype是什麼？小弟我無法作很詳細的解釋，GOOGLE上也都有滿多說明的。而我認為它主要的用意是在解決”Shared Behavior”的問題，透過prototype來做delegation，建立起prototype-chain，達到”prototypal” inheritance。</p>
+<h1 id="prototype__uFF08_u539F_u578B_uFF09"><a href="#prototype__uFF08_u539F_u578B_uFF09" class="headerlink" title="prototype （原型）"></a>prototype （原型）</h1><p>首先，prototype是JS中很重要的概念。那prototype是什麼？小弟我無法作很詳細的解釋，GOOGLE上也都有滿多說明的。而我認為它主要的用意是在解決”Shared Behavior”的問題，透過delegate prototype，建立起prototype-chain，達到”prototypal” inheritance。</p>
 <p>class-based的語言物件導向是創建class，而此類別就像是一個藍圖，藉由“複製”藍圖來產生sub-class再將其複製來產生instance。而prototype-based的語言如JS，並不用這種類似”複製”的手法，而是將某物件的原型委託(delegation)給另個物件使用（上述<code>new</code>的第二個行為），也就是物件連接著另一個物件，產生prototype link(delegation link)，達到繼承的效果，其實本質上是不一樣的。</p>
 <p>JS中，每個物件都有<code>__proto__</code>這個屬性，以<code>Object.getPrototypeOf( obj )</code>或是<code>obj.__proto___</code>取得<br>而每個函式都會有個<code>prototype</code>這個屬性，以<code>funcName.prototype</code>取得</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dog = &#123;name: <span class="string">'Max'</span>&#125;</span><br><span class="line">dog.__proto__ <span class="comment">// &#123;&#125; 會看到空物件的原因是裡面的屬性都是not enumeratable</span></span><br><span class="line">dog.hasOwnProperty(<span class="string">"name"</span>) <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
@@ -168,7 +168,7 @@ JS中的原型物件導向">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://tancc.github.io/blog/2016/01/24/javascript-oo/" data-id="cik73piua000nqtzbqkb3aeo0" class="article-share-link">Share</a>
+      <a data-url="http://tancc.github.io/blog/2016/01/24/javascript-oo/" data-id="cik7pw9vk000nk5a20fenbtab" class="article-share-link">Share</a>
       
         <a href="http://tancc.github.io/blog/2016/01/24/javascript-oo/#disqus_thread" class="article-comment-link">Comments</a>
       
