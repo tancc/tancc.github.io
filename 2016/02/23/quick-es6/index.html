@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://tancc.github.io/blog/2016/02/23/quick-es6/index.html">
 <meta property="og:site_name" content="Tan's note">
 <meta property="og:description" content="let &amp;amp; const原本js都為function scope，但是時常會出現一些情形，會意外地使得變數污染到全域。123456789for(var i = 0; i &amp;lt; 10; i++) &amp;#123;  console.log(i);&amp;#125;console.log(i); // 10if(true)&amp;#123;  var b = ‘hi’&amp;#125;console.log(b)">
-<meta property="og:updated_time" content="2016-02-23T09:11:12.000Z">
+<meta property="og:updated_time" content="2016-02-23T14:00:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6常用特性快速瀏覽">
 <meta name="twitter:description" content="let &amp;amp; const原本js都為function scope，但是時常會出現一些情形，會意外地使得變數污染到全域。123456789for(var i = 0; i &amp;lt; 10; i++) &amp;#123;  console.log(i);&amp;#125;console.log(i); // 10if(true)&amp;#123;  var b = ‘hi’&amp;#125;console.log(b)">
@@ -118,12 +118,13 @@
 </li>
 </ul>
 <h1 id="Destructuring"><a href="#Destructuring" class="headerlink" title="Destructuring"></a>Destructuring</h1><p>從object取值變得很容易<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;name: <span class="string">'Rob'</span>, age: <span class="number">30</span>, gender: <span class="string">'male'</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> &#123; name, age, genger &#125; = obj; <span class="comment">//直接對應到obj的key值就可以了</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> anotherObj = &#123; location: &#123; country: <span class="string">'Taiwan'</span>, city: <span class="string">'Tainan'</span> &#125; &#125;;</span><br><span class="line"><span class="keyword">let</span> &#123; location : &#123; country, city&#125;&#125; = anotherObj;</span><br><span class="line">country; <span class="comment">// 'Taiwan'</span></span><br><span class="line">city; <span class="comment">// 'Tainan'</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h1>
+<h1 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h1><p>能以更像如C++ Java等語言的語法來實行”類別”機制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function Person (name, age) &#123;&#10;  this.name = name;&#10;  this.age = age;&#10;&#125;&#10;Person.prototype.run = function () &#123;&#10;  console.log(&#39;I can run~&#39;)&#10;&#125;&#10;&#10;//&#31561;&#21516;&#26044;&#10;&#10;class Person &#123;&#10;  constructor(name, age) &#123;&#10;    this.name = name;&#10;    this.age = age&#10;  &#125;&#10;  run() &#123;&#10;    console.log(&#39;I can run~&#39;)&#10;  &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></p>
+
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://tancc.github.io/blog/2016/02/23/quick-es6/" data-id="cikz70wv9000jwca2wo2mi0ha" class="article-share-link">Share</a>
+      <a data-url="http://tancc.github.io/blog/2016/02/23/quick-es6/" data-id="cikzhcw0k000j79zb0u7zfbdl" class="article-share-link">Share</a>
       
         <a href="http://tancc.github.io/blog/2016/02/23/quick-es6/#disqus_thread" class="article-comment-link">Comments</a>
       
