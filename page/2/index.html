@@ -3,21 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>EC2 node 開發環境設置(centos/amazon-linux) | Tan&#39;s note</title>
+  <title>Tan&#39;s note</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1: Install gcc, make and git123sudo yum install gcc-c++ makesudo yum install openssl-develsudo yum install git
-2: Install node12345git clone https://github.com/nodejs/node.gitcd node./configure makesu">
-<meta property="og:type" content="article">
-<meta property="og:title" content="EC2 node 開發環境設置(centos/amazon-linux)">
-<meta property="og:url" content="http://tancc.github.io/blog/2016/01/08/EC2_node環境設置(centos_amazon-linux)/index.html">
+  <meta name="description" content="不定期更新，主要紀錄開發時所遇到的問題與所學習的東西，有時難免很像流水帳起見諒ＸＤ">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tan's note">
+<meta property="og:url" content="http://tancc.github.io/blog/page/2/index.html">
 <meta property="og:site_name" content="Tan's note">
-<meta property="og:description" content="1: Install gcc, make and git123sudo yum install gcc-c++ makesudo yum install openssl-develsudo yum install git
-2: Install node12345git clone https://github.com/nodejs/node.gitcd node./configure makesu">
-<meta property="og:updated_time" content="2016-01-26T14:45:31.000Z">
+<meta property="og:description" content="不定期更新，主要紀錄開發時所遇到的問題與所學習的東西，有時難免很像流水帳起見諒ＸＤ">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EC2 node 開發環境設置(centos/amazon-linux)">
-<meta name="twitter:description" content="1: Install gcc, make and git123sudo yum install gcc-c++ makesudo yum install openssl-develsudo yum install git
-2: Install node12345git clone https://github.com/nodejs/node.gitcd node./configure makesu">
+<meta name="twitter:title" content="Tan's note">
+<meta name="twitter:description" content="不定期更新，主要紀錄開發時所遇到的問題與所學習的東西，有時難免很像流水帳起見諒ＸＤ">
   
     <link rel="alternate" href="/atom.xml" title="Tan&#39;s note" type="application/atom+xml">
   
@@ -66,7 +62,9 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-EC2_node環境設置(centos_amazon-linux)" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main">
+  
+    <article id="post-EC2_node環境設置(centos_amazon-linux)" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2016/01/08/EC2_node環境設置(centos_amazon-linux)/" class="article-date">
   <time datetime="2016-01-08T13:56:57.000Z" itemprop="datePublished">2016-01-08</time>
@@ -79,8 +77,8 @@
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      EC2 node 開發環境設置(centos/amazon-linux)
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2016/01/08/EC2_node環境設置(centos_amazon-linux)/">EC2 node 開發環境設置(centos/amazon-linux)</a>
     </h1>
   
 
@@ -91,13 +89,11 @@
         
         
           <h1 id="1_3A_Install_gcc_2C_make_and_git"><a href="#1_3A_Install_gcc_2C_make_and_git" class="headerlink" title="1: Install gcc, make and git"></a>1: Install gcc, make and git</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install gcc-c++ make</span><br><span class="line">sudo yum install openssl-devel</span><br><span class="line">sudo yum install git</span><br></pre></td></tr></table></figure>
-<h1 id="2_3A_Install_node"><a href="#2_3A_Install_node" class="headerlink" title="2: Install node"></a>2: Install node</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/nodejs/node.git</span><br><span class="line"><span class="built_in">cd</span> node</span><br><span class="line">./configure </span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<p>Add user´s directory to BIN Paths<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">nano /etc/sudoers</span><br></pre></td></tr></table></figure></p>
-<p>找到這行<code>Defaults secure_path = /sbin:/bin:/usr/sbin:/usr/bin</code><br>在行尾加入<code>:/usr/local/bin</code></p>
-<p>如果gcc g++ 版本不夠高，在安裝node時make會發生錯誤。必須更新gcc g++<br>這時需要執行以下(若是使用Amazon Linux則不會有此問題)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/yum.repos.d</span><br><span class="line">wget http://linuxsoft.cern.ch/cern/scl/slc6-scl.repo</span><br><span class="line">yum -y --nogpgcheck install devtoolset-<span class="number">3</span>-gcc devtoolset-<span class="number">3</span>-gcc-c++</span><br><span class="line">// and <span class="keyword">then</span> start a new shell</span><br><span class="line">scl <span class="built_in">enable</span> devtoolset-<span class="number">3</span> bash</span><br></pre></td></tr></table></figure></p>
-<h1 id="3_3A_Install_npm"><a href="#3_3A_Install_npm" class="headerlink" title="3: Install npm"></a>3: Install npm</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/npm/npm.git</span><br><span class="line"><span class="built_in">cd</span> npm</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<h1 id="4_3A_Install_Mongodb"><a href="#4_3A_Install_Mongodb" class="headerlink" title="4: Install Mongodb"></a>4: Install Mongodb</h1><p>在安裝3.2版的時候，因為我解決不了libstdc++6的問題，所以裝3.0的…<br>不過Amazon Linux就很順利地安裝完成了<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/etc/yum.repos.d/</span><br><span class="line">touch mongodb-org-<span class="number">3.2</span>.repo</span><br><span class="line">//修改mongodb-org-<span class="number">3.2</span>.repo檔案內容為</span><br><span class="line">[mongodb-org-<span class="number">3.2</span>]</span><br><span class="line">name=MongoDB Repository</span><br><span class="line">baseurl=https://repo.mongodb.org/yum/amazon/<span class="number">2013.03</span>/mongodb-org/<span class="number">3.2</span>/x86_64/</span><br><span class="line">gpgcheck=<span class="number">0</span></span><br><span class="line">enabled=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">//install</span><br><span class="line">sudo yum install -y mongodb-org</span><br><span class="line">//start mongodb</span><br><span class="line">sudo service mongod start</span><br><span class="line">//當系統啟動時自動啟動mongodb</span><br><span class="line">sudo chkconfig mongod on</span><br></pre></td></tr></table></figure></p>
-
+          
+            <p class="article-more-link">
+              <a href="/blog/2016/01/08/EC2_node環境設置(centos_amazon-linux)/#more">Read More</a>
+            </p>
+          
         
       
     </div>
@@ -112,31 +108,16 @@
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/blog/2016/01/14/linux指令筆記/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          linux指令筆記
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
-  
 </article>
 
 
-<section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
 
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 </section>
         
           <aside id="sidebar">
@@ -230,13 +211,11 @@
 <script>
   var disqus_shortname = 'tansnote';
   
-  var disqus_url = 'http://tancc.github.io/blog/2016/01/08/EC2_node環境設置(centos_amazon-linux)/';
-  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
