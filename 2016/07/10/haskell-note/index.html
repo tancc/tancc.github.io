@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>haskell_note | Tan&#39;s note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="這幾年functional programming很紅，無論是語言或是一些框架，裡頭都充滿了FP的概念。這週末開始在看Learn you a haskell來學習haskell，網路上也有中文版的，接下來會斷斷續續更新與新增學習的筆記。此篇包含Learn you a haskell中的Start Out
+加減乘除、布林、比對12345678910111213141516ghci&amp;gt; 10 +">
+<meta property="og:type" content="article">
+<meta property="og:title" content="haskell_note">
+<meta property="og:url" content="http://tancc.github.io/blog/2016/07/10/haskell-note/index.html">
+<meta property="og:site_name" content="Tan's note">
+<meta property="og:description" content="這幾年functional programming很紅，無論是語言或是一些框架，裡頭都充滿了FP的概念。這週末開始在看Learn you a haskell來學習haskell，網路上也有中文版的，接下來會斷斷續續更新與新增學習的筆記。此篇包含Learn you a haskell中的Start Out
+加減乘除、布林、比對12345678910111213141516ghci&amp;gt; 10 +">
+<meta property="og:updated_time" content="2016-07-09T16:27:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="haskell_note">
+<meta name="twitter:description" content="這幾年functional programming很紅，無論是語言或是一些框架，裡頭都充滿了FP的概念。這週末開始在看Learn you a haskell來學習haskell，網路上也有中文版的，接下來會斷斷續續更新與新增學習的筆記。此篇包含Learn you a haskell中的Start Out
+加減乘除、布林、比對12345678910111213141516ghci&amp;gt; 10 +">
+  
+    <link rel="alternate" href="/atom.xml" title="Tan&#39;s note" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/blog" id="logo">Tan&#39;s note</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/blog">Home</a>
+        
+          <a class="main-nav-link" href="/blog/blog/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/tancc">Github</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tancc.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-haskell-note" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2016/07/10/haskell-note/" class="article-date">
+  <time datetime="2016-07-09T16:20:18.000Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      haskell_note
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <p>這幾年functional programming很紅，無論是語言或是一些框架，裡頭都充滿了FP的概念。<br>這週末開始在看<a href="http://learnyouahaskell.com/" target="_blank" rel="external">Learn you a haskell</a>來學習haskell，網路上也有<a href="http://learnyoua.haskell.sg/" target="_blank" rel="external">中文版</a>的，接下來會斷斷續續更新與新增學習的筆記。<br>此篇包含Learn you a haskell中的Start Out</p>
+<h1 id="加減乘除、布林、比對"><a href="#加減乘除、布林、比對" class="headerlink" title="加減乘除、布林、比對"></a>加減乘除、布林、比對</h1><p><hr><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; <span class="number">10</span> + <span class="number">10</span> // <span class="number">20</span></span><br><span class="line"><span class="title">ghci</span>&gt; <span class="number">10</span> * <span class="number">23</span> // <span class="number">230</span></span><br><span class="line"><span class="title">ghci</span>&gt; (<span class="number">9</span> - <span class="number">3</span>) * <span class="number">20</span> // <span class="number">120</span>，用()改變執行順序</span><br><span class="line"><span class="title">ghci</span>&gt; <span class="number">5</span> * (<span class="number">-5</span>) // <span class="number">-25</span>，負號要用()包起來，否則會出錯</span><br><span class="line"></span><br><span class="line">// 當中的布林值為`<span class="type">True</span>`和`<span class="type">False</span>`，<span class="type">AND</span>為`&amp;&amp;` <span class="type">OR</span>為`||`，`not`為相反</span><br><span class="line"><span class="title">ghci</span>&gt; <span class="type">True</span> || <span class="type">False</span> // <span class="type">True</span></span><br><span class="line"><span class="title">ghci</span>&gt; <span class="type">True</span> &amp;&amp; <span class="type">False</span> // <span class="type">False</span></span><br><span class="line"><span class="title">ghci</span>&gt; not(<span class="type">False</span> || <span class="type">True</span>) // <span class="type">False</span></span><br><span class="line"></span><br><span class="line">// 等於 `==` 不等於 `/=`</span><br><span class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> == <span class="number">1</span> // <span class="type">True</span></span><br><span class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> /= <span class="number">5</span> // <span class="type">True</span></span><br><span class="line"><span class="title">ghci</span>&gt; 'hello' == 'hello'</span><br><span class="line"><span class="title">ghci</span>&gt; <span class="number">1</span> == '<span class="number">1</span>' // 會報錯！，不同型別不可互相比較</span><br><span class="line"><span class="title">ghci</span>&gt; <span class="number">0</span> == <span class="type">False</span> // 會報錯！，不同型別不可互相比較</span><br></pre></td></tr></table></figure></p>
+<h1 id="函數"><a href="#函數" class="headerlink" title="函數"></a>函數</h1><p><hr><br><code>+ - * /</code>都是函數，我們會把使用兩個數字將其包住如<code>5 * 4</code>，這種函數稱為infix function。其他不這樣其他不這樣與數字結在一起的函數則稱為prefix function，這種類型的函數佔了大多數。</p>
+<h3 id="函數呼叫"><a href="#函數呼叫" class="headerlink" title="函數呼叫"></a>函數呼叫</h3><p>呼叫方法很簡潔，<code>函數名 參數</code>，參數不用放在括號裡<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; min <span class="number">100</span> <span class="number">99</span> // <span class="number">99</span></span><br><span class="line"><span class="title">ghci</span>&gt; max <span class="number">5.4</span> <span class="number">7.1</span> // <span class="number">7.1</span></span><br></pre></td></tr></table></figure></p>
+<p>值得注意的是，函數的呼叫擁有較高的優先權<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; succ <span class="number">2</span> * <span class="number">5</span> // <span class="number">15</span></span><br><span class="line"><span class="title">ghci</span>&gt; succ (<span class="number">2</span> * <span class="number">5</span>) // <span class="number">11</span></span><br></pre></td></tr></table></figure></p>
+<p>接受兩個參數的函數，可使用``將其轉換成infix function<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; div <span class="number">10</span> <span class="number">2</span> // <span class="number">5</span></span><br><span class="line"><span class="title">ghci</span>&gt; <span class="number">10</span> `div` <span class="number">2</span> // <span class="number">5</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="函數定義"><a href="#函數定義" class="headerlink" title="函數定義"></a>函數定義</h3><p>定義方式為 <code>函數名 參數 = 行為</code>，haskell終會自動返回函數行為中的最後一段。函數名開頭不可為大寫。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// dobuleMe為一個將輸入乘以<span class="number">2</span>的函數</span><br><span class="line"><span class="title">ghci</span>&gt; doubleMe x = x + x</span><br><span class="line"><span class="title">ghci</span>&gt; doubleMe <span class="number">19</span> // <span class="number">38</span></span><br></pre></td></tr></table></figure></p>
+<p>在函數中呼叫其他函數<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; doubleUs x y = doubleMe x + doubleMe y</span><br><span class="line"><span class="title">ghci</span>&gt; doubleUs <span class="number">2</span> <span class="number">3</span> // <span class="number">10</span></span><br></pre></td></tr></table></figure></p>
+<p>值得注意的是，在haskell中並不在意函數的宣告順序，可以先宣告doubleUs在宣告doubleMe。</p>
+<h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">doubleSmallNumber</span> x = <span class="keyword">if</span> x &gt; <span class="number">100</span>  </span><br><span class="line">                        <span class="keyword">then</span> x  </span><br><span class="line">                        <span class="keyword">else</span> x * <span class="number">2</span></span><br><span class="line">// 等同於</span><br><span class="line"><span class="title">doubleSmallNumber</span> x = <span class="keyword">if</span> x &gt; <span class="number">100</span> <span class="keyword">then</span> x <span class="keyword">else</span> x * <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>在haskell中，只要有<code>if</code>就要有<code>else</code>，<code>else</code>不可被省略。且<code>if</code>語句是個expression，expression就是會返回一個值的程式碼。由於<code>else</code>是不可省略的，因此<code>if</code>語句一定會返回一個結果，所以<code>if</code>是個expression。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">conanO'Brien</span> = <span class="string">"It's a-me, Conan O'Brien!"</span></span><br></pre></td></tr></table></figure></p>
+<p><code>conanO&#39;Brien</code>也是一個函數，只是他並無參數，且它的值是無法修改的。沒有參數的函數稱為definition(“定義”)或是name(“名字”)。</p>
+<h1 id="List"><a href="#List" class="headerlink" title="List"></a>List</h1><p><hr><br>一樣是用將值放在中括號<code>[]</code>中，且數值跟文字不能混著放。而字串其實就等是字元的List<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; <span class="keyword">let</span> aList = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>] // 與aList = ...等價，通常使用<span class="keyword">let</span>做為定義常數的慣例</span><br><span class="line"><span class="title">ghci</span>&gt; <span class="keyword">let</span> wrongList = [<span class="number">1</span>, '<span class="number">2</span>', <span class="number">3</span>, <span class="number">4</span>, '<span class="number">5</span>', '<span class="number">6</span>'] // 報錯</span><br><span class="line"><span class="title">ghci</span>&gt; ['h', 'i'] == 'hi' // <span class="type">True</span>。字元必須用單引號，字串用雙引號。</span><br></pre></td></tr></table></figure></p>
+<h3 id="List-合併"><a href="#List-合併" class="headerlink" title="List 合併"></a>List 合併</h3><p><code>++</code> 用來連接兩個List，<code>:</code>用來連接一個元素到List<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>] ++ [<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>] // [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="title">ghci</span>&gt; <span class="string">"hello"</span> ++ <span class="string">" "</span> ++ <span class="string">"world"</span> // <span class="string">"hello world"</span></span><br></pre></td></tr></table></figure></p>
+<p>使用<code>++</code>會遍歷左邊List，在長List的運算會比較好效能。因此使用<code>:</code>來插入值到List終會是比較好的做法。<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; '<span class="type">A'</span>:<span class="string">" SMALL CAT"</span>  // <span class="string">"A SMALL CAT"</span>  </span><br><span class="line"><span class="title">ghci</span>&gt; <span class="number">5</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] // [<span class="number">5</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line"><span class="title">ghci</span>&gt; <span class="number">1</span>:<span class="number">2</span>:<span class="number">3</span>:[] // [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="index取值"><a href="#index取值" class="headerlink" title="index取值"></a>index取值</h3><p>使用<code>!!</code>，<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] !! <span class="number">2</span> // <span class="number">3</span></span><br><span class="line"><span class="title">ghci</span>&gt; <span class="string">"hello"</span> !! <span class="number">4</span> // 'o'</span><br></pre></td></tr></table></figure></p>
+<h3 id="List的比較"><a href="#List的比較" class="headerlink" title="List的比較"></a>List的比較</h3><p>如果List內的元素是可以比較的，那就可以將List拿來比較。而比較的方法是重第一個開始，若第一個值相同則比第二個…以此類推<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] &gt; [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>] // <span class="type">True</span></span><br><span class="line"><span class="title">ghci</span>&gt; [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] &gt; [<span class="number">3</span>,<span class="number">1</span>,<span class="number">5</span>] // <span class="type">True</span></span><br><span class="line"><span class="title">ghci</span>&gt; [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] &gt; [<span class="number">3</span>,<span class="number">4</span>] // <span class="type">True</span></span><br><span class="line"><span class="title">ghci</span>&gt; [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] == [<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] // <span class="type">True</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="List常用函數"><a href="#List常用函數" class="headerlink" title="List常用函數"></a>List常用函數</h3><h4 id="head-返回List中第一個元素"><a href="#head-返回List中第一個元素" class="headerlink" title="head - 返回List中第一個元素"></a>head - 返回List中第一個元素</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; head [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>] // <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<h4 id="tail-返回List中除了head的部分"><a href="#tail-返回List中除了head的部分" class="headerlink" title="tail - 返回List中除了head的部分"></a>tail - 返回List中除了head的部分</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; tail [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>] // [<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="last-返回List中最後一個元素"><a href="#last-返回List中最後一個元素" class="headerlink" title="last - 返回List中最後一個元素"></a>last - 返回List中最後一個元素</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; last [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>] // <span class="number">8</span></span><br></pre></td></tr></table></figure>
+<h4 id="init-返回List中除了last的部分"><a href="#init-返回List中除了last的部分" class="headerlink" title="init - 返回List中除了last的部分"></a>init - 返回List中除了last的部分</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; init [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>] // [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="head-tail-last-init所傳入的List不能為空，否則會出錯！"><a href="#head-tail-last-init所傳入的List不能為空，否則會出錯！" class="headerlink" title="head tail last init所傳入的List不能為空，否則會出錯！"></a><code>head tail last init</code>所傳入的List不能為空，否則會出錯！</h4><h4 id="length-返回List的長度"><a href="#length-返回List的長度" class="headerlink" title="length - 返回List的長度"></a>length - 返回List的長度</h4><h4 id="null-判斷List是否為空"><a href="#null-判斷List是否為空" class="headerlink" title="null - 判斷List是否為空"></a>null - 判斷List是否為空</h4><h4 id="reverse-反轉List"><a href="#reverse-反轉List" class="headerlink" title="reverse - 反轉List"></a>reverse - 反轉List</h4><h4 id="take-返回List中指定數量的元素"><a href="#take-返回List中指定數量的元素" class="headerlink" title="take - 返回List中指定數量的元素"></a>take - 返回List中指定數量的元素</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; take <span class="number">2</span> [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>] // [<span class="number">2</span>,<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="drop-返回List但會拿掉前指定數量的元素"><a href="#drop-返回List但會拿掉前指定數量的元素" class="headerlink" title="drop - 返回List但會拿掉前指定數量的元素"></a>drop - 返回List但會拿掉前指定數量的元素</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; drop <span class="number">2</span> [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>] // [<span class="number">6</span>,<span class="number">8</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="maximum-返回最大的元素"><a href="#maximum-返回最大的元素" class="headerlink" title="maximum - 返回最大的元素"></a>maximum - 返回最大的元素</h4><h4 id="minimum-返回最小的元素"><a href="#minimum-返回最小的元素" class="headerlink" title="minimum - 返回最小的元素"></a>minimum - 返回最小的元素</h4><h4 id="sum-返回List的總和"><a href="#sum-返回List的總和" class="headerlink" title="sum - 返回List的總和"></a>sum - 返回List的總和</h4><h4 id="product-返回List內元素相乘的結果"><a href="#product-返回List內元素相乘的結果" class="headerlink" title="product - 返回List內元素相乘的結果"></a>product - 返回List內元素相乘的結果</h4><h4 id="elem-判斷某個元素是否在List內，通常以infix-function的形式使用"><a href="#elem-判斷某個元素是否在List內，通常以infix-function的形式使用" class="headerlink" title="elem - 判斷某個元素是否在List內，通常以infix function的形式使用"></a>elem - 判斷某個元素是否在List內，通常以infix function的形式使用</h4><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; <span class="number">2</span> `elem` [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>] // <span class="type">True</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tancc.github.io/blog/blog/2016/07/10/haskell-note/" data-id="ciqfdxsh50000vo8g3e996qbj" class="article-share-link">Share</a>
+      
+        <a href="http://tancc.github.io/blog/blog/2016/07/10/haskell-note/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/haskell/">haskell</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2016/02/25/learn-redux/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Redux筆記</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ec2/">ec2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/haskell/">haskell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/react-router/">react-router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/redux/">redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/aws/" style="font-size: 15px;">aws</a> <a href="/blog/tags/ec2/" style="font-size: 15px;">ec2</a> <a href="/blog/tags/haskell/" style="font-size: 10px;">haskell</a> <a href="/blog/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/blog/tags/linux/" style="font-size: 15px;">linux</a> <a href="/blog/tags/react/" style="font-size: 10px;">react</a> <a href="/blog/tags/react-router/" style="font-size: 10px;">react-router</a> <a href="/blog/tags/redux/" style="font-size: 10px;">redux</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2016/07/10/haskell-note/">haskell_note</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/02/25/learn-redux/">Redux筆記</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/02/23/quick-es6/">ES6常用特性快速瀏覽</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/02/14/react-router-context/">react-router無法使用context</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/02/02/js-ninja-note/">忍者：Javascript開發技巧探究 筆記</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Tan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/blog" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/blog/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/tancc" class="mobile-nav-link">Github</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'tansnote';
+  
+  var disqus_url = 'http://tancc.github.io/blog/blog/2016/07/10/haskell-note/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+  </div>
+</body>
+</html>
