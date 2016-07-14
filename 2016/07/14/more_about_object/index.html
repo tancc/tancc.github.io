@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>物件相關的更多行為 | Tan&#39;s note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="記錄在You Dont Know Javascript中看到的這個部分。這部分我認為是一般比較少接觸的地方，但其實也算是重要的，在滿多第三方套件其實都有用到這功能來實作。
+
+特性描述器(Property Descriptors)123const obj = &amp;#123;  id: 123&amp;#125;;
+這是一般在我們在定義一個物件的時候所會做的事情，但其實在ES5開始物件中的property都可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="物件相關的更多行為">
+<meta property="og:url" content="http://tancc.github.io/blog/2016/07/14/more_about_object/index.html">
+<meta property="og:site_name" content="Tan's note">
+<meta property="og:description" content="記錄在You Dont Know Javascript中看到的這個部分。這部分我認為是一般比較少接觸的地方，但其實也算是重要的，在滿多第三方套件其實都有用到這功能來實作。
+
+特性描述器(Property Descriptors)123const obj = &amp;#123;  id: 123&amp;#125;;
+這是一般在我們在定義一個物件的時候所會做的事情，但其實在ES5開始物件中的property都可以">
+<meta property="og:updated_time" content="2016-07-14T16:36:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="物件相關的更多行為">
+<meta name="twitter:description" content="記錄在You Dont Know Javascript中看到的這個部分。這部分我認為是一般比較少接觸的地方，但其實也算是重要的，在滿多第三方套件其實都有用到這功能來實作。
+
+特性描述器(Property Descriptors)123const obj = &amp;#123;  id: 123&amp;#125;;
+這是一般在我們在定義一個物件的時候所會做的事情，但其實在ES5開始物件中的property都可以">
+  
+    <link rel="alternate" href="/atom.xml" title="Tan&#39;s note" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/blog" id="logo">Tan&#39;s note</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/blog">Home</a>
+        
+          <a class="main-nav-link" href="/blog/blog/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/tancc">Github</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tancc.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-more_about_object" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2016/07/14/more_about_object/" class="article-date">
+  <time datetime="2016-07-14T15:34:47.000Z" itemprop="datePublished">2016-07-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      物件相關的更多行為
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <p>記錄在You Dont Know Javascript中看到的這個部分。這部分我認為是一般比較少接觸的地方，但其實也算是重要的，在滿多第三方套件其實都有用到這功能來實作。</p>
+<p><hr></p>
+<h1 id="特性描述器-Property-Descriptors"><a href="#特性描述器-Property-Descriptors" class="headerlink" title="特性描述器(Property Descriptors)"></a>特性描述器(Property Descriptors)</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  id: <span class="number">123</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這是一般在我們在定義一個物件的時候所會做的事情，但其實在ES5開始物件中的property都可以用所謂的<code>propperty descriptor</code>，也就是<code>defineProperty(...)</code>加以描述。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同上</span></span><br><span class="line"><span class="keyword">const</span> obj = &#123;&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">"id"</span>, &#123;</span><br><span class="line">  value: <span class="number">123</span>,</span><br><span class="line">  writable: <span class="literal">true</span>,</span><br><span class="line">  configurable: <span class="literal">true</span>,</span><br><span class="line">  enumerable: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 預設狀況下 const obj = &#123;id: 123&#125;</span></span><br><span class="line"><span class="comment">// obj背後的writable、configurable、enumerable都會是true</span></span><br></pre></td></tr></table></figure>
+<p>這裡value比較不會有疑問，就代表這個物件他某個特性的值，下面接著介紹剩下三個特徵</p>
+<h2 id="writable"><a href="#writable" class="headerlink" title="writable"></a>writable</h2><p>顧名思義，就是控制這個特性是否可以寫入用的。當<code>writable: false</code>時，對property做修改會被忽略(在strict mode下會報錯)<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">"id"</span>, &#123;</span><br><span class="line">  value: <span class="number">123</span>,</span><br><span class="line">  writable: <span class="literal">false</span>,</span><br><span class="line">  configurable: <span class="literal">true</span>,</span><br><span class="line">  enumerable: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">obj.id = <span class="number">321</span></span><br><span class="line">obj.id <span class="comment">// 123</span></span><br></pre></td></tr></table></figure></p>
+<p>值得注意的是，<code>writable: false</code>只能製造出shallow immutability，若這個property是指向另一個物件的參考(如array, object, function)，則writable為false時，還是可以改變這個property參考對象的內容。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">"arr"</span>, &#123;</span><br><span class="line">  value: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">  writable: <span class="literal">false</span>,</span><br><span class="line">  configurable: <span class="literal">true</span>,</span><br><span class="line">  enumerable: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">obj.arr.push(<span class="number">4</span>)</span><br><span class="line">obj.arr <span class="comment">// [1,2,3,4]</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="configurable"><a href="#configurable" class="headerlink" title="configurable"></a>configurable</h2><p>當一個特性<code>configurable: false</code>時，嘗試去修改他descriptors的定義時，會發生錯誤(還是可以修改value)。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">"id"</span>, &#123;</span><br><span class="line">  value: <span class="number">123</span>,</span><br><span class="line">  writable: <span class="literal">true</span>,</span><br><span class="line">  configurable: <span class="literal">false</span>,</span><br><span class="line">  enumerable: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">"id"</span>, &#123;</span><br><span class="line">  ...</span><br><span class="line">  configurable: <span class="literal">true</span>,</span><br><span class="line">&#125;); <span class="comment">// TypeError</span></span><br></pre></td></tr></table></figure></p>
+<p>也就是說一開始將<code>configurable</code>設為<code>false</code>是一個不可逆的行為。<br>在此值得注意的有兩點</p>
+<ul>
+<li>若<code>writable: true</code>可被改為<code>writable: false</code>，但反之則會報錯！</li>
+<li><code>delete</code>運算子的行為會失敗<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// obj 的定義如上</span></span><br><span class="line"><span class="keyword">delete</span> obj.id <span class="comment">// false</span></span><br><span class="line">obj.id <span class="comment">// 123</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="enumerable"><a href="#enumerable" class="headerlink" title="enumerable"></a>enumerable</h2><p>也就是這個特性是否可被列舉，若是為<code>false</code>，則在對物件進行列舉的行為(for in)時，此特性則不會出現</p>
+<hr>
+
+<h1 id="Object-Constant"><a href="#Object-Constant" class="headerlink" title="Object Constant"></a>Object Constant</h1><p>使用<code>writable: false</code>以及<code>configurable: false</code>，可以讓我們建立一個常數(constant)，也就是無法被修改、重新定義、刪除。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;&#125;</span><br><span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">"MY_CONSTANT_NUMBER"</span>, &#123;</span><br><span class="line">  value: <span class="number">777</span>,</span><br><span class="line">  writable: <span class="literal">false</span>,</span><br><span class="line">  configurable: <span class="literal">false</span>,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p><hr></p>
+<h1 id="Prevent-extensions"><a href="#Prevent-extensions" class="headerlink" title="Prevent extensions"></a>Prevent extensions</h1><p>當我們想要避免物件被添增更多的特性時，可以使用<code>Object.preventExtensions( obj )</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;id: <span class="number">123</span>&#125;</span><br><span class="line"><span class="built_in">Object</span>.preventExtensions( obj )</span><br><span class="line">obj.age = <span class="number">25</span>;</span><br><span class="line">obj <span class="comment">// &#123;id: 123&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p><hr></p>
+<h1 id="Seal"><a href="#Seal" class="headerlink" title="Seal"></a>Seal</h1><p> <code>Object.seal( obj )</code>會將obj密封，他所做的行為就是在物件上呼叫<code>Object.preventExtensions</code>，以及<code>configurable: false</code>。也就是說，你無法對此物件新增新的特性或是刪除特性，也無法重新配置描述器的設置，但是仍然可以修改既有的特性值。</p>
+<h1 id="Freeze"><a href="#Freeze" class="headerlink" title="Freeze"></a>Freeze</h1><p> <code>Object.freeze( obj )</code>所做的事情是，在物件上呼叫<code>Object.seal(obj)</code>，以及<code>writable: false</code>。也就是他做了Seal做的行為，並再加上讓我們無法修改既有物件的特性。</p>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tancc.github.io/blog/blog/2016/07/14/more_about_object/" data-id="ciqmjldi4000g73ejewe9k7pf" class="article-share-link">Share</a>
+      
+        <a href="http://tancc.github.io/blog/blog/2016/07/14/more_about_object/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/javasript/">javasript</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2016/07/10/haskell-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">haskell_note</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ec2/">ec2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/haskell/">haskell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/javasript/">javasript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/react-router/">react-router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/redux/">redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/aws/" style="font-size: 15px;">aws</a> <a href="/blog/tags/ec2/" style="font-size: 15px;">ec2</a> <a href="/blog/tags/haskell/" style="font-size: 10px;">haskell</a> <a href="/blog/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/blog/tags/javasript/" style="font-size: 10px;">javasript</a> <a href="/blog/tags/linux/" style="font-size: 15px;">linux</a> <a href="/blog/tags/react/" style="font-size: 10px;">react</a> <a href="/blog/tags/react-router/" style="font-size: 10px;">react-router</a> <a href="/blog/tags/redux/" style="font-size: 10px;">redux</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2016/07/14/more_about_object/">物件相關的更多行為</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/07/10/haskell-note/">haskell_note</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/02/25/learn-redux/">Redux筆記</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/02/23/quick-es6/">ES6常用特性快速瀏覽</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/02/14/react-router-context/">react-router無法使用context</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Tan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/blog" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/blog/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/tancc" class="mobile-nav-link">Github</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'tansnote';
+  
+  var disqus_url = 'http://tancc.github.io/blog/blog/2016/07/14/more_about_object/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+  </div>
+</body>
+</html>
