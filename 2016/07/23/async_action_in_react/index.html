@@ -22,7 +22,7 @@
 在components中處理 // git checkout 01
 在redux actions中">
 <meta property="og:image" content="http://tancc.github.io/blog/blog/2016/07/23/async_action_in_react/example_view.jpg">
-<meta property="og:updated_time" content="2016-07-24T17:06:56.000Z">
+<meta property="og:updated_time" content="2016-07-25T15:51:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react 處理非同步action的對策">
 <meta name="twitter:description" content="在開發時，時常會有需要發一個action，然後去向後端拿資料的動作。而這整個請求資料的行為是非同步的，因此在執行時還需要處理一些UI上的互動，如“載入中”、“發生錯誤”、“順利取得資料”。
@@ -147,7 +147,7 @@
 <li>改變loading狀態 -&gt; true</li>
 <li>＃非同步部分<br>3.1 去向後端拿category的資料(getMemberData)<br>3.2 若請求失敗，loading: true -&gt; false, errorMessage: res.error<br>3.3 若請求成功，loading: true -&gt; false, errorMessage: ‘’</li>
 </ol>
-<p>我們可以將這個處理程序搬到actions中，將整個action發送的商業邏輯定義在裡頭。</p>
+<p>我們可以將這個處理程序搬到actions中，藉由<a href="https://github.com/gaearon/redux-thunk" target="_blank" rel="external">thunk-middleware</a>將整個action發送的商業邏輯定義在裡頭。</p>
 <p>而這裡的狀態跟行為，其實可以全部交給reducer和action去處理，component只需接收props去改變view。</p>
 <h3 id="1-改變正在查詢的項目名-category"><a href="#1-改變正在查詢的項目名-category" class="headerlink" title="1. 改變正在查詢的項目名(category)"></a>1. 改變正在查詢的項目名(category)</h3><p>將“正在查詢的項目名”也就是<code>category</code>放在store中，發送一個action來改變<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dispatch(&#123;</span><br><span class="line">  type: <span class="string">'CHANGE_ACTIVE_CATEGORY'</span>,</span><br><span class="line">  category</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <h3 id="2-3-1-3-2-3-3"><a href="#2-3-1-3-2-3-3" class="headerlink" title="2, 3.1, 3.2, 3.3"></a>2, 3.1, 3.2, 3.3</h3><p>非同步action的部分，以這個範例而言我們可以先將他的流程分成四個部分：</p>
