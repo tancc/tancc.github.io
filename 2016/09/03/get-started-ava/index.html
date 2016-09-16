@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>初探AVA | Tan&#39;s note</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="javascript有許多測試框架，較出名的如Mocha、Jasmine等等。近年比較廣受好評的則是這篇要介紹的AVA
+AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promise、Generator、Async、Observable等等。12345import test from">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探AVA">
+<meta property="og:url" content="http://tancc.github.io/blog/2016/09/03/get-started-ava/index.html">
+<meta property="og:site_name" content="Tan's note">
+<meta property="og:description" content="javascript有許多測試框架，較出名的如Mocha、Jasmine等等。近年比較廣受好評的則是這篇要介紹的AVA
+AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promise、Generator、Async、Observable等等。12345import test from">
+<meta property="og:updated_time" content="2016-09-08T16:48:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初探AVA">
+<meta name="twitter:description" content="javascript有許多測試框架，較出名的如Mocha、Jasmine等等。近年比較廣受好評的則是這篇要介紹的AVA
+AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promise、Generator、Async、Observable等等。12345import test from">
+  
+    <link rel="alternate" href="/atom.xml" title="Tan&#39;s note" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Tan&#39;s note</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/tancc">Github</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://tancc.github.io/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-get-started-ava" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2016/09/03/get-started-ava/" class="article-date">
+  <time datetime="2016-09-03T04:51:06.000Z" itemprop="datePublished">2016-09-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      初探AVA
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+        
+          <p>javascript有許多測試框架，較出名的如<a href="https://github.com/mochajs/mocha" target="_blank" rel="external">Mocha</a>、<a href="https://github.com/jasmine/jasmine" target="_blank" rel="external">Jasmine</a>等等。<br>近年比較廣受好評的則是這篇要介紹的<a href="https://github.com/avajs/ava/" target="_blank" rel="external">AVA</a></p>
+<p>AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。<br>此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promise、Generator、Async、Observable等等。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> test <span class="keyword">from</span> <span class="string">'ava'</span>;</span><br><span class="line"><span class="keyword">const</span> add = (a, b) =&gt; a + b;</span><br><span class="line">test(t =&gt; &#123;</span><br><span class="line">  t.is(add(<span class="number">3</span>, <span class="number">5</span>), <span class="number">8</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>並且每個測試執行在獨立的環境，彼此互相獨立不相依，所以強迫我們必須撰寫atomic test。</p>
+<h1 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h1><p>一般會安裝在全域環境中，然後執行<code>ava --init</code>將其安裝在專案中並且設置package.json中的scripts<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npm i -g ava</span><br><span class="line"><span class="comment"># 專案中</span></span><br><span class="line">$ ava --init</span><br></pre></td></tr></table></figure></p>
+<p>這時可以看到專案中的package.json中被自動加入相關的簡單設置<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/* package.json */</span><br><span class="line">...</span><br><span class="line">"scripts": &#123;</span><br><span class="line">    "test": "ava"</span><br><span class="line">  &#125;,</span><br><span class="line">"devDependencies": &#123;</span><br><span class="line">  "ava": "^0.15.0"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="執行"><a href="#執行" class="headerlink" title="執行"></a>執行</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="built_in">test</span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ npm <span class="built_in">test</span> -- --watch</span><br></pre></td></tr></table></figure>
+<p>預設情況下會自動遞迴去查找資料夾中符合<code>test.js test-*.js test/**/*.js **/__tests__/**/*.js **/*.test.js</code>的檔案，並且自動忽略node_modules。還有許多的<a href="https://github.com/avajs/ava/#cli" target="_blank" rel="external">CLI參數</a>可自行加入。</p>
+<h1 id="設置"><a href="#設置" class="headerlink" title="設置"></a>設置</h1><p>CLI中的所有參數都可以定義在package.json中，自己的簡單設定如下<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"ava"</span>: &#123;</span><br><span class="line">    <span class="attr">"files"</span>: [</span><br><span class="line">      <span class="string">"test/*.js"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"concurrency"</span>: <span class="number">5</span>,</span><br><span class="line">    <span class="attr">"failFast"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"verbose"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"powerAssert"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"require"</span>: [</span><br><span class="line">      <span class="string">"babel-register"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"babel"</span>: <span class="string">"inherit"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="ex1-基本使用"><a href="#ex1-基本使用" class="headerlink" title="ex1 基本使用"></a>ex1 基本使用</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> test <span class="keyword">from</span> <span class="string">'ava'</span>;</span><br><span class="line">test(<span class="string">'this is example 1'</span>, t =&gt; &#123;</span><br><span class="line">  t.pass();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>test</code>需要兩個參數，一個為title，也就是這個測試的標題。第二個為一個函式，而他的參數只有一個且會被自動帶入，也就是t這個execution object，他帶有許多api可供使用。</p>
+<h1 id="ex2-限制assertion的數量"><a href="#ex2-限制assertion的數量" class="headerlink" title="ex2 限制assertion的數量"></a>ex2 限制assertion的數量</h1><p>使測試只有通過指定數量的assertion才算成功，主要是用來偵測測試不明原因提早退出用的。同樣的當assertion大於指定數量也會報錯<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// will success</span></span><br><span class="line">test(<span class="string">'example 2: assertion plan [SUCCESS]'</span>, t =&gt; &#123;</span><br><span class="line">  t.plan(<span class="number">1</span>);</span><br><span class="line">  t.deepEqual([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// will fail</span></span><br><span class="line">test(<span class="string">'example 2: assertion plan [FAIL]'</span>, t =&gt; &#123;</span><br><span class="line">  t.plan(<span class="number">3</span>);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">      t.true(i &lt; <span class="number">4</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h1 id="ex3-只執行某個測試"><a href="#ex3-只執行某個測試" class="headerlink" title="ex3 只執行某個測試"></a>ex3 只執行某個測試</h1><p>當測試變得很龐大時，遇到只需執行某個測試時在用的<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test.only(<span class="string">'example 3: test.only'</span>, t =&gt; &#123;</span><br><span class="line">  t.pass();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>此時就算有100個測試案例(不限定同隻檔案！)，也只會跑這一個而已。</p>
+<h1 id="ex4-執行title符合條件的測試"><a href="#ex4-執行title符合條件的測試" class="headerlink" title="ex4 執行title符合條件的測試"></a>ex4 執行title符合條件的測試</h1><p>在ava的設定裡加上match，以下舉個例子<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "ava": &#123;</span><br><span class="line">    ...</span><br><span class="line">    "match": [</span><br><span class="line">      "*foo", // title是foo結尾的測試</span><br><span class="line">      "*foo*", // title含有foo的測試</span><br><span class="line">      "!*foo*", // title不含有foo的測試</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>更多match請<a href="https://github.com/avajs/ava/#running-tests-with-matching-titles" target="_blank" rel="external">參照這</a></p>
+<h1 id="ex5-已知失敗的測試"><a href="#ex5-已知失敗的測試" class="headerlink" title="ex5 已知失敗的測試"></a>ex5 已知失敗的測試</h1><p>有一些已知的bug存在但是還沒有時間去修復時，就可以使用Failing test。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test.failing(<span class="string">'這個測試的結果會失敗'</span>, t =&gt; &#123;</span><br><span class="line">    t.fail();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h1 id="ex6-before-amp-after"><a href="#ex6-before-amp-after" class="headerlink" title="ex6 before &amp; after"></a>ex6 before &amp; after</h1><p>當然也有before/beforeEach、after/afterEach這些功能，請<a href="https://github.com/avajs/ava/#before--after-hooks" target="_blank" rel="external">參照官方文件</a></p>
+
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://tancc.github.io/blog/blog/2016/09/03/get-started-ava/" data-id="cit5m5fya0007yq8gnnae6gn3" class="article-share-link">Share</a>
+      
+        <a href="http://tancc.github.io/blog/blog/2016/09/03/get-started-ava/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ava/">ava</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/test/">test</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2016/08/05/javascript-design-pattern/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">javascript設計模式與開發實踐 - 筆記</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ava/">ava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/aws/">aws</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/design-pattern/">design pattern</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ec2/">ec2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/haskell/">haskell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/javasript/">javasript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/react-router/">react-router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/redux/">redux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/test/">test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/webpack/">webpack</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/ava/" style="font-size: 10px;">ava</a> <a href="/blog/tags/aws/" style="font-size: 15px;">aws</a> <a href="/blog/tags/design-pattern/" style="font-size: 10px;">design pattern</a> <a href="/blog/tags/ec2/" style="font-size: 15px;">ec2</a> <a href="/blog/tags/haskell/" style="font-size: 10px;">haskell</a> <a href="/blog/tags/javascript/" style="font-size: 20px;">javascript</a> <a href="/blog/tags/javasript/" style="font-size: 10px;">javasript</a> <a href="/blog/tags/linux/" style="font-size: 15px;">linux</a> <a href="/blog/tags/react/" style="font-size: 15px;">react</a> <a href="/blog/tags/react-router/" style="font-size: 10px;">react-router</a> <a href="/blog/tags/redux/" style="font-size: 15px;">redux</a> <a href="/blog/tags/test/" style="font-size: 10px;">test</a> <a href="/blog/tags/webpack/" style="font-size: 10px;">webpack</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/09/">九月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/08/">八月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/07/">七月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/02/">二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2016/01/">一月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2016/09/03/get-started-ava/">初探AVA</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/08/05/javascript-design-pattern/">javascript設計模式與開發實踐 - 筆記</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/07/23/async_action_in_react/">react 處理非同步action的對策</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/07/14/more_about_object/">物件相關的更多行為</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2016/07/10/haskell-note/">haskell_note</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Tan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/tancc" class="mobile-nav-link">Github</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'tansnote';
+  
+  var disqus_url = 'http://tancc.github.io/blog/blog/2016/09/03/get-started-ava/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+  </div>
+</body>
+</html>
