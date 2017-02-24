@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="寫！都寫！隨便寫！">
+    <meta name="keyword" content="blog web programming">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Tan" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        store, action, reducer規劃｜Tan&#39;s Note
+        
+    </title>
+
+    <link rel="canonical" href="http://tancc.github.io/blog/blog/2017/02/25/planning-redux/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/blog/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/blog/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/blog/">
+                <span class="brand-logo">
+                    Tan
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/blog/archives/">archives</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/blog/tags/">tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://unsplash.it/600/300/?random">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://unsplash.it/600/300/?random')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>store, action, reducer規劃</h1>
+                    
+                    <span class="meta">
+                         作者 Tan
+                        <span>
+                          日期 2017-02-25
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/blog/tags/#redux"
+                           title="redux">redux</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            store, action, reducer規劃
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>紀錄store的規劃，以及非同步請求的actions與reducers的設計思路(使用<code>redux-thunk</code>)</p>
+<p><hr></p>
+<h1 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h1><ul>
+<li><h2 id="根據主要domain來存放"><a href="#根據主要domain來存放" class="headerlink" title="根據主要domain來存放"></a>根據主要domain來存放</h2><p>這裡的domain指的是在APP裡不同主題的頁面、使用者資訊、設定等等主要的場域。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  channel: &#123;...&#125;,</span><br><span class="line">  connection: &#123;...&#125;</span><br><span class="line">  group: &#123;...&#125;,</span><br><span class="line">  main: &#123;...&#125;,</span><br><span class="line">  profile: &#123;...&#125;,</span><br><span class="line">  userInfo: &#123;...&#125;,</span><br><span class="line">  setting: &#123;...&#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h2 id="再根據子項目來切分"><a href="#再根據子項目來切分" class="headerlink" title="再根據子項目來切分"></a>再根據子項目來切分</h2><p>子項目或是稱subdomain指的是，如頁面狀態, 不同子頁面的資料和狀態，如：dataList, loading, error, total, end等等。<br>例如：不同主題的頁面可能可再細分成不同的子頁面，我們必須去紀錄當下是哪個子頁面(tab)以及子頁面的資訊(資料資訊、載入狀態等等)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  channel: &#123;</span><br><span class="line">    tab: <span class="string">'all'</span>,</span><br><span class="line">    all: &#123;</span><br><span class="line">      dataList: [&#123;頻道資料&#125;,...]</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      total: <span class="number">10</span></span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    self: &#123;</span><br><span class="line">      dataList: [&#123;頻道資料&#125;,...]</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      total: <span class="number">2</span></span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  main: &#123;</span><br><span class="line">    tab: <span class="string">'hot'</span>,</span><br><span class="line">    hot: &#123;</span><br><span class="line">      dataList: [&#123;文章資料&#125;,...]</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      total: <span class="number">20</span></span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    latest: &#123;</span><br><span class="line">      dataList: [&#123;文章資料&#125;,...]</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      total: <span class="number">20</span></span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>壞處：相同的資料可能出現在不同的地方，如頻道資料出現在<code>channel.all</code>以及<code>channel.self</code>中。<br>會使得在操作時較麻煩(在不同處改同一份資料)，可能造成資料不一致(A處改了但是B沒改)。</p>
+</blockquote>
+<ul>
+<li><h2 id="將共用的資料部分抽出來，放在entities中。"><a href="#將共用的資料部分抽出來，放在entities中。" class="headerlink" title="將共用的資料部分抽出來，放在entities中。"></a>將共用的資料部分抽出來，放在<code>entities</code>中。</h2>將程序裡的顯示資料(多為畫面呈現使用而非單純狀態)抽出，統一集中到<code>store.entities</code>裡<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  entities: &#123;</span><br><span class="line">    channels: &#123;</span><br><span class="line">      頻道id<span class="number">-1</span>: &#123;頻道資料&#125;,</span><br><span class="line">      頻道id<span class="number">-2</span>: &#123;頻道資料&#125;,</span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    activities: &#123;</span><br><span class="line">      文章id<span class="number">-1</span>: &#123;文章資料&#125;,</span><br><span class="line">      文章id<span class="number">-2</span>: &#123;文章資料&#125;,</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  channel: &#123;</span><br><span class="line">    tab: <span class="string">'all'</span>,</span><br><span class="line">    all: &#123;</span><br><span class="line">      dataList: [頻道id,...]</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      total: <span class="number">10</span></span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    self: &#123;</span><br><span class="line">      dataList: [頻道id,...]</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      total: <span class="number">2</span></span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  main: &#123;</span><br><span class="line">    tab: <span class="string">'hot'</span>,</span><br><span class="line">    hot: &#123;</span><br><span class="line">      dataList: [文章id,...]</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      total: <span class="number">20</span></span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    latest: &#123;</span><br><span class="line">      dataList: [文章id,...]</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      total: <span class="number">20</span></span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>若是共用的資料裡面又有一樣類型的資料(如activity, user等等)，也一併抽出。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  entities: &#123;</span><br><span class="line">    channels: &#123;</span><br><span class="line">      頻道id<span class="number">-1</span>: &#123;</span><br><span class="line">        頻道資料,</span><br><span class="line">        頻道文章: [文章ID,...],</span><br><span class="line">        頻道成員: [使用者ID,...]</span><br><span class="line">      &#125;,</span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    activities: &#123;</span><br><span class="line">      文章id<span class="number">-1</span>: &#123;</span><br><span class="line">        文章資料,</span><br><span class="line">        author: 使用者ID</span><br><span class="line">      &#125;,</span><br><span class="line">      ...</span><br><span class="line">    &#125;,</span><br><span class="line">    users: &#123;</span><br><span class="line">      使用者id<span class="number">-1</span>: &#123;使用者資料&#125;,</span><br><span class="line">      使用者id<span class="number">-2</span>: &#123;使用者資料&#125;,</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>在entities中，根據資料的屬性去分類，再根據資料的ID去存放完整的資料。<br>而其他地方則存放資料的ID，在修改或存取時，都是根據ID去對應entities裡面的資料。<br>如此一來就有”唯一的資料來源”，確保各處的資料是一致，且操作也較為單純。<br>推薦使用 <strong><code>normalizr</code></strong></p>
+</blockquote>
+<p>當然<code>entities</code>中的資料，根據不同的store規劃會衍伸出不同形式。但核心的精神就是，他在store中的角色就如同資料庫一樣。</p>
+<h1 id="Action-Creators"><a href="#Action-Creators" class="headerlink" title="Action Creators"></a>Action Creators</h1><ul>
+<li><h2 id="定義非同步行為-發送API-的共用action"><a href="#定義非同步行為-發送API-的共用action" class="headerlink" title="定義非同步行為(發送API)的共用action"></a>定義非同步行為(發送API)的共用action</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 發送請求</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">requestData</span> (<span class="params">&#123;params&#125;</span>) </span>&#123; <span class="keyword">return</span> &#123;type: REQUEST_DATA, ... &#125;&#125;</span><br><span class="line"><span class="comment">// 收到回傳資料</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveData</span> (<span class="params">&#123;data&#125;</span>) </span>&#123; <span class="keyword">return</span> &#123;type: RECEIVE_DATA, ... &#125;&#125;</span><br><span class="line"><span class="comment">// 收到失敗訊息</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveFail</span> (<span class="params">&#123;errMsg&#125;</span>) </span>&#123; <span class="keyword">return</span> &#123;type: RECEIVE_FAIL, ... &#125;&#125;</span><br><span class="line"><span class="comment">// 已無後續資料</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reachEnd</span> (<span class="params">&#123;isEnd&#125;</span>) </span>&#123; <span class="keyword">return</span> &#123;type: REACH_END, ... &#125;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>共用action會有個問題：reducers接收到時，要怎麼分辨這隻action要不要處理呢?<br>因為共用action，所以無法單純使用<code>action.type</code>來分辨。</p>
+</blockquote>
+<ul>
+<li>在action中帶入其他參數來讓reducer識別<br>如：使用domain, subdomain, key等等<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 發送請求</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">requestData</span> (<span class="params">&#123;domain, key, option&#125;&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    type: REQUEST_DATA,</span><br><span class="line">    payload: &#123;domain, key, option&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 收到回傳資料</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">receiveData</span> (<span class="params">&#123;domain, key, data, option&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    type: RECEIVE_DATA,</span><br><span class="line">    payload: &#123;domain, key, data, option&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用情境類似</span></span><br><span class="line">dispatch(requestData(&#123;domain: <span class="string">'channel'</span>, key: <span class="string">'joined'</span>, option: &#123;...&#125;&#125;));</span><br><span class="line"><span class="comment">// API呼叫</span></span><br><span class="line">apiUtils(參數...) <span class="comment">//傳入某些參數</span></span><br><span class="line">  .then(res =&gt; &#123;</span><br><span class="line">    dispatch(receiveData (&#123;domain: <span class="string">'channel'</span>, key: <span class="string">'joined'</span>, data: res, option: &#123;...&#125;&#125;))</span><br><span class="line">    ...</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>在每次要去呼叫API請求後端資料時，除了特定的商業邏輯外<br>都需要去<code>requestData</code>，再呼叫對應的API方法，再根據回傳結果去做<code>receiveData</code>或<code>receiveFail</code>, <code>reachEnd</code></p>
+</blockquote>
+<ul>
+<li><h2 id="抽象出loadDataCenter"><a href="#抽象出loadDataCenter" class="headerlink" title="抽象出loadDataCenter"></a>抽象出<code>loadDataCenter</code></h2><code>loadDataCenter</code>用來幫我們做掉呼叫API時的一連串邏輯<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadListDataCenter</span>(<span class="params">&#123;domain, key, ...option&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (dispatch, getState) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> state = getState();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判斷是否可進行api呼叫</span></span><br><span class="line">    <span class="comment">// 如：loading 或 已經沒有後需資料時，就不必再進行下面的動作了</span></span><br><span class="line">    <span class="comment">// canCallApi內常會搭配selector獲取store中特定的狀態來判斷</span></span><br><span class="line">    <span class="keyword">if</span> (!canCallApi(state, domain, key)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 發送請求</span></span><br><span class="line">    dispatch(requestData(&#123;domain, key, option&#125;));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根據state以及傳入的domain, key, option，來決定得出要呼叫的api以及要傳入的參數</span></span><br><span class="line">    <span class="keyword">const</span> parameter = parameterMap(&#123;state, domain, key, option&#125;);</span><br><span class="line">    <span class="keyword">const</span> api = apiMap(&#123;state, domain, key, option&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> api(parameter).then(response =&gt; &#123;</span><br><span class="line">      <span class="comment">// 判斷response是否有錯誤</span></span><br><span class="line">      <span class="keyword">if</span> (isWrong(response)) &#123;</span><br><span class="line">        <span class="comment">// 收到失敗訊息</span></span><br><span class="line">        <span class="keyword">return</span> dispatch(receiveFail(&#123;domain, key, option&#125;));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 收到回傳資料</span></span><br><span class="line">      dispatch(receiveData(&#123;domain, key, data: response, option&#125;));</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (根據response判斷是否沒有後續資料) &#123;</span><br><span class="line">        <span class="comment">// 已無後續資料</span></span><br><span class="line">        dispatch(reachEnd(&#123;domain, key, option&#125;));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(response);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>也就是用<code>loadListDataCenter</code>來當作呼叫API時的入口，並從參數(以範例來說主要就是<code>domain</code>,<code>key</code>)來對應出實際要呼叫的api和其他邏輯判斷<br>其中<code>parameterMap</code>、<code>apiMap</code>這兩個函式就是根據參數回傳對應的東西<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">apiMap</span>(<span class="params">&#123;state, domain, key, option&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 把不同的domain, key所會對應的api寫在config中</span></span><br><span class="line">  <span class="comment">// 當然也有可能根據state, option等做更複雜的判斷</span></span><br><span class="line">  <span class="keyword">const</span> api = config.apiMappingConfig[domain][key];</span><br><span class="line">  <span class="keyword">if</span> (!api) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">`dose not match any api! [<span class="subst">$&#123;domain&#125;</span>-<span class="subst">$&#123;key&#125;</span>]`</span>);</span><br><span class="line">    <span class="keyword">return</span> () =&gt; &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> api;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">parameterMap</span>(<span class="params">&#123;state, domain, key, option&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 根據不同情境去組出參數</span></span><br><span class="line">  <span class="comment">// 因為參數值可能是動態的，所以會因為當前的state資料不同而有所差異</span></span><br><span class="line">  <span class="comment">// 因此時常再額外引入`selector`來組出最終需要的參數值</span></span><br><span class="line">  <span class="keyword">switch</span> (domain) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'main'</span>: &#123;</span><br><span class="line">      <span class="keyword">if</span> (key === <span class="string">'hot'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">          offset: getMainData(state, <span class="string">'hot'</span>).offset,</span><br><span class="line">          limit: <span class="number">10</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125; esle &#123;...&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'group'</span>: &#123;&#125;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>這裡有個問題，我們並不能確保後端response回來的格式能符合我們store的設計<br>因此response還需要做一次加工，這道程序要在action或reducer或是在middleWare去處理都可以，<br>這裡將他放在acion裏頭做</p>
+</blockquote>
+<ul>
+<li><h2 id="在loadDataCenter裏頭對後端回傳的資料先做一次加工"><a href="#在loadDataCenter裏頭對後端回傳的資料先做一次加工" class="headerlink" title="在loadDataCenter裏頭對後端回傳的資料先做一次加工"></a>在<code>loadDataCenter</code>裏頭對後端回傳的資料先做一次加工</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadListDataCenter</span>(<span class="params">&#123;domain, key, ...option&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (dispatch, getState) =&gt; &#123;</span><br><span class="line">    ...</span><br><span class="line">    return api(parameter).then(response =&gt; &#123;</span><br><span class="line">      <span class="comment">// responseParser會根據參數來回傳</span></span><br><span class="line">      <span class="comment">// toEntity: 資料是屬於entities裡的哪一部分</span></span><br><span class="line">      <span class="comment">// byIds: 根據id存放資料的物件，類似&#123;id-1: &#123;id-1的資料&#125;, id-2: &#123;id-2的資料&#125;,...&#125;</span></span><br><span class="line">      <span class="comment">// end: 是否沒有後續資料了</span></span><br><span class="line">      <span class="comment">// rest: 是放其他除了上面外客製的東西，用來給reducer做特定store數值的改並用</span></span><br><span class="line">      <span class="keyword">const</span> &#123;toEntity, byIds, end, ...rest&#125; = responseParser(&#123;domain, key, response&#125;);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 收到回傳資料</span></span><br><span class="line">      dispatch(receiveData(&#123;domain, key, data: rest, option&#125;));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 因為有時資料並不用放到entities時，所以在經過一層判斷</span></span><br><span class="line">      <span class="comment">// toEntity有值時，才發出addToEntities這個action加進store.entities</span></span><br><span class="line">      <span class="keyword">if</span> (toEntity) &#123;</span><br><span class="line">				dispatch(addToEntities(&#123;domain, key, toEntity, byIds&#125;));</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 已無後續資料</span></span><br><span class="line">      <span class="keyword">if</span> (end) &#123;</span><br><span class="line">        dispatch(reachEnd(&#123;domain, key, option&#125;));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(response);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>responseParser</code>以這邊的範例來說，大概會成這種形式<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">responseParser</span>(<span class="params">&#123;domain, key, response&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 從store的設計來看，我們的entities中會存放不同種類的資料</span></span><br><span class="line">  <span class="comment">// 先根據domain, key，得到所呼叫的api回傳的是甚麼類型的資料(modelType)</span></span><br><span class="line">  <span class="keyword">const</span> modelType = getDataModel(domain, key);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 由於後端api不同類型的資料，格式會有所不同</span></span><br><span class="line">  <span class="comment">// 因此根據modelType，會去對resposne做不同的處理</span></span><br><span class="line">  <span class="keyword">if</span> (modelType === <span class="string">'activity'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> parseActivityModel(response);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (modelType === <span class="string">'channel'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> parseChannelModel(response);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (...) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> parseResForNonEntityModel(response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer"></a>Reducer</h1><p>當使用共用的action時，reducer除了用action type來辨別是否處理這個action外，勢必還需用到其他的參數，如上面介紹action時所提到的如domain, subdomain, key等等</p>
+<ul>
+<li><h2 id="過濾action"><a href="#過濾action" class="headerlink" title="過濾action"></a>過濾action</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 過濾</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">channelReducer</span>(<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;domain, key&#125; = action;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 根據某些客制的邏輯來判斷</span></span><br><span class="line">  <span class="comment">// 方法1：用if</span></span><br><span class="line">  <span class="keyword">if</span> (domain !== <span class="string">'channel'</span>) <span class="keyword">return</span> state;</span><br><span class="line">  <span class="keyword">if</span> (key !== <span class="string">'all'</span> || key !== <span class="string">'joined'</span>) <span class="keyword">return</span> state;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 方法2：自訂含式來定義</span></span><br><span class="line">  <span class="comment">// 先定義好isActionForReducer這個共用的方法</span></span><br><span class="line">  <span class="comment">// 還有passCondition也就是可以通過的條件，可能如</span></span><br><span class="line">  <span class="comment">// &#123;</span></span><br><span class="line">  <span class="comment">//  domain: ['channel'],</span></span><br><span class="line">  <span class="comment">//  key: ['all', 'joined']</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  <span class="keyword">if</span> (!isActionForReducer(passCondition, &#123;domain, key&#125;)) <span class="keyword">return</span> state;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> RECEIVE_SUCCESS: &#123;...&#125;</span><br><span class="line">    <span class="keyword">case</span> REQUEST_DATA: &#123;...&#125;</span><br><span class="line">    <span class="keyword">case</span> RECEIVE_FAIL: &#123;...&#125;</span><br><span class="line">    <span class="keyword">case</span> REACH_END: &#123;...&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">channerlsEntity</span>(<span class="params">state, action</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;toEntity&#125; = action;</span><br><span class="line">  <span class="keyword">if</span> (toEntity !== <span class="string">'channels'</span>) <span class="keyword">return</span> state;</span><br><span class="line">  ...</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>以上是在做Store設計，以及非同步api請求時的action、reducer的設計大方向。</p>
+<hr>
+
+<h1 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h1><p>但隨著產品變大變複雜，可能會有一些狀況。</p>
+<ul>
+<li><h2 id="loadDataCenter會越來越複雜"><a href="#loadDataCenter會越來越複雜" class="headerlink" title="loadDataCenter會越來越複雜"></a><code>loadDataCenter</code>會越來越複雜</h2>因為產品規模變大了，會需要動用很多隻api。因此呼叫的邏輯會可能會慢慢增加，就開始需在<code>loadDataCenter</code>內做很多判斷。</li>
+</ul>
+<p>一個解法就是，定義不同的<code>loadDataCenter</code>去處理API呼叫流程。例如分成負責列表資料的<code>loadListDataCenter</code>和一般非列表資料的<code>loadNonListDataCenter</code>。<br>也就是將不同類型的API交給不同的函式負責。</p>
+<ul>
+<li><h2 id="responseParser會越來越複雜"><a href="#responseParser會越來越複雜" class="headerlink" title="responseParser會越來越複雜"></a><code>responseParser</code>會越來越複雜</h2>如果返回的response的沒有一致性，可想而知因為會有許多不同類型的資料，在<code>responseParser</code>就需做很多條件判斷，隨之可能會變得難以維護。</li>
+</ul>
+<p>可能的解法就是在server端或是client端的store middleware端先對資料進行一次加工。</p>
+<ul>
+<li><h2 id="要判斷何時需要進行資料更新-重新載入"><a href="#要判斷何時需要進行資料更新-重新載入" class="headerlink" title="要判斷何時需要進行資料更新(重新載入)"></a>要判斷何時需要進行資料更新(重新載入)</h2></li>
+</ul>
+<p>如果跟資料端那裡有類似websocket這東西就很好辦，直接監聽就好。如果沒有時，可能的解法就是在store中增加一些狀態，如<code>updateTime</code>，再搭配自定義的時間間隔去判斷要不要更新<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// store</span></span><br><span class="line">&#123;</span><br><span class="line">  main: &#123;</span><br><span class="line">    hot: &#123;</span><br><span class="line">      dataList: [文章id,...]</span><br><span class="line">      <span class="comment">// 若end為true，原本會在canCallApi中被判斷為，沒有後續資料所以不進行api呼叫</span></span><br><span class="line">      end: <span class="literal">true</span>,</span><br><span class="line">      loading: <span class="literal">false</span>,</span><br><span class="line">      total: <span class="number">50</span>,</span><br><span class="line">      updateTime: <span class="number">1487607707596</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// loadDataCenter 中的canCallApi</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">canCallApi</span>(<span class="params">state, domain, key</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 如：現在時間 - 上次更新時間 &gt; 更新間隔</span></span><br><span class="line">  <span class="keyword">if</span> (currentTime() - getUpDateTime(state, domain, key) &gt;= updatePeriod(state, domain, key))</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>或是當離上次載入時間多久時，整個列表資料重載。<br>這個功能可能就像是一個cronjob、timeTask，每隔一段時間自動做這個動作。<br>這裡以把它放進<code>loadDataCenter</code>裡為範例，當然可以把這概念放在其他地方執行。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadDataCenter</span>(<span class="params">&#123;domain, key, ...option&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (dispatch, getState) =&gt; &#123;</span><br><span class="line">    ...</span><br><span class="line">    return api(parameter).then(response =&gt; &#123;</span><br><span class="line">      <span class="comment">// 收到回傳資料</span></span><br><span class="line">      dispatch(receiveSuccess(&#123;domain, key, data: response, option&#125;));</span><br><span class="line">      <span class="comment">// 確定有收到回傳資料後才執行createFullReloadTask，這個函式內部會跑如fullReloadTask，去重載資料</span></span><br><span class="line">      <span class="comment">// createFullReloadTask須滿足一些條件，如：</span></span><br><span class="line">      <span class="comment">// 1. 根據domain, key, option必須mapping出所定義的，需要全部重載的時間。若時間過了一段就自動從打對應的api</span></span><br><span class="line">      <span class="comment">// 2. 確保同樣的情境(如相同的domain, key, option)的fullReloadTask不會重複被生成。</span></span><br><span class="line">      createFullReloadTask(domain, key, option, api)</span><br><span class="line">      ...</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>這邊只是舉例而已，肯定還有更好的解法來實現這種更新的需求。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2017/02/06/JSON-stringify/" data-toggle="tooltip" data-placement="top"
+                           title="JSON.stringify">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Store"><span class="toc-text">Store</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#根據主要domain來存放"><span class="toc-text">根據主要domain來存放</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再根據子項目來切分"><span class="toc-text">再根據子項目來切分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#將共用的資料部分抽出來，放在entities中。"><span class="toc-text">將共用的資料部分抽出來，放在entities中。</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Action-Creators"><span class="toc-text">Action Creators</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定義非同步行為-發送API-的共用action"><span class="toc-text">定義非同步行為(發送API)的共用action</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抽象出loadDataCenter"><span class="toc-text">抽象出loadDataCenter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在loadDataCenter裏頭對後端回傳的資料先做一次加工"><span class="toc-text">在loadDataCenter裏頭對後端回傳的資料先做一次加工</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reducer"><span class="toc-text">Reducer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#過濾action"><span class="toc-text">過濾action</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#缺點"><span class="toc-text">缺點</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#loadDataCenter會越來越複雜"><span class="toc-text">loadDataCenter會越來越複雜</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#responseParser會越來越複雜"><span class="toc-text">responseParser會越來越複雜</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#要判斷何時需要進行資料更新-重新載入"><span class="toc-text">要判斷何時需要進行資料更新(重新載入)</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/blog/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/blog/tags/#redux"
+                           title="redux">redux</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/RyanTan.YT">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/tancc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/yin-ting-tan-172184b5">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Tan 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/blog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/blog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://tancc.github.io/blog/blog/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10003519_623356174385513_1929844211_n.jpg?oh=cfb625a8fa42f1ba846175a29b200ed6&amp;oe=59366A76">
+</body>
+
+</html>
