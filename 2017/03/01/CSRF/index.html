@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="寫！都寫！隨便寫！">
+    <meta name="keyword" content="blog web programming">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Tan" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        CSRF｜Tan&#39;s Note
+        
+    </title>
+
+    <link rel="canonical" href="http://tancc.github.io/blog/blog/2017/03/01/CSRF/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/blog/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/blog/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/blog/">
+                <span class="brand-logo">
+                    Tan
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/blog/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/blog/tags/">tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/blog/archives/">archives</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://unsplash.it/600/300/?random">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://unsplash.it/600/300/?random')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>CSRF</h1>
+                    
+                    <span class="meta">
+                         作者 Tan
+                        <span>
+                          日期 2017-03-01
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/blog/tags/#security"
+                           title="security">security</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            CSRF
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>說來慚愧，一直都有聽過這專有名詞，但沒有好好去瞭解過，真是太不專業了…</p>
+<p>最近剛好要為自己好好打底，就趁這個機會來記錄一下CSRF吧！</p>
+<hr>
+
+<h1 id="白話的CSRF"><a href="#白話的CSRF" class="headerlink" title="白話的CSRF"></a>白話的CSRF</h1><p>CSRF(Cross-Site Request Forgery，跨站點偽造請求)，簡單的說就是在使用者不知情的情況下，冒用身份去發出請求。</p>
+<p>也就是在不同domain下偽照出本人所發出的request。可以用來以你的身份買東西啊、轉帳啊、進行需要身份權限的行為…</p>
+<p>主要的原因就是server端在接收HTTP請求的時候，沒有做好嚴格的把關所導致。</p>
+<p>例如你登入了A網站後，瀏覽器就存有相關的用戶Cookie。之後你來到了Ｂ網站(未登出Ａ的情況)，Ｂ站偷偷地發出了一個有惡意的request給Ａ網站，而因為瀏覽器的機制，會自動把關連Ａdomain的cookie帶上去，因此Ａ那邊就會認為這是你發出的請求，導致這段惡意的程式碼被執行。</p>
+<h1 id="很廢的例子"><a href="#很廢的例子" class="headerlink" title="很廢的例子"></a>很廢的例子</h1><p>舉個情境：假設你是某個站的管理員，有個刪除用戶的請求為GET，這時只要偽造發出此請求而不讓你發現目的就達成了<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://your-website.com/deleteUser?id=100"</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!--或是--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://your-website.com/deleteUser?id=100"</span>&gt;</span>恭喜中獎<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"..."</span>&gt;</span><span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"..."</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果請求是POST，就用form的方式偽造，並將form的行為導到你看不見的iframe<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">iframe</span> <span class="attr">style</span>=<span class="string">"display:none"</span> <span class="attr">name</span>=<span class="string">"csrf-frame"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://your-website.com/deleteUser"</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">id</span>=<span class="string">"wow"</span> <span class="attr">target</span>=<span class="string">"csrf-frame"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"100"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">document.getElementById("wow").submit()</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="簡單防禦"><a href="#簡單防禦" class="headerlink" title="簡單防禦"></a>簡單防禦</h1><h2 id="GET是Idempotent的"><a href="#GET是Idempotent的" class="headerlink" title="GET是Idempotent的"></a>GET是Idempotent的</h2><p>確保所有GET的請求是不會更動到資料庫的內容，也就是不會改變應用程式的狀態。也就可以輕易避掉<code>&lt;img /&gt;</code>或<code>&lt;a&gt;..&lt;/a&gt;</code>之類的CSRF攻擊。</p>
+<h2 id="不兼容舊版瀏覽器"><a href="#不兼容舊版瀏覽器" class="headerlink" title="不兼容舊版瀏覽器"></a>不兼容舊版瀏覽器</h2><p>因為有些舊版的瀏覽器是不支援CORS或是其他安全政策，所以會有危險。</p>
+<h2 id="server端驗證Referer欄位"><a href="#server端驗證Referer欄位" class="headerlink" title="server端驗證Referer欄位"></a>server端驗證Referer欄位</h2><p>HTTP Referer的欄位是用來表示這個請求的來源，因此在接收敏感行為的請求時，server端可以以此來檢查請求來源，是不是來自於合法的domain，如果不是就把他擋掉（如：從有惡意程式碼的網站發出）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> referer = req.headers.referer</span><br><span class="line"><span class="keyword">if</span> (referer &amp;&amp; referer.trim().contains(<span class="string">'your-website.com'</span>)) &#123;</span><br><span class="line">  <span class="comment">// 通過</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>壞處：</p>
+<ul>
+<li>瀏覽器可能沒有帶Referer</li>
+<li>Referer可能被竄改</li>
+</ul>
+</blockquote>
+<h2 id="在發出請求時帶入token"><a href="#在發出請求時帶入token" class="headerlink" title="在發出請求時帶入token"></a>在發出請求時帶入token</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://your-website.com/deleteUser"</span> <span class="attr">method</span>=<span class="string">"POST"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"csrftoken"</span> <span class="attr">value</span>=<span class="string">"csrftoken"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"id"</span> <span class="attr">value</span>=<span class="string">"100"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="built_in">document</span>.getElementById(<span class="string">"wow"</span>).submit()</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>client端發送請求時要帶入從server拿到的csrftoken，server端接收client端發出的請求後，檢查csrftoken是否合法，不合法就拒絕掉。</p>
+<p>攻擊者要拿到csrftoken有困難，因為他必須先送請求到要攻擊的網站來拿到token，但這段只能用javascrip做。不過大多網站是不支援CORS，所以攻擊者是無法得逞的。</p>
+<blockquote>
+<p>壞處：</p>
+<ul>
+<li>需要對所有敏感行為的請求處都帶入csrftoken，有時要費的工比較大(？)</li>
+<li>token要確保夠安全不會被猜到</li>
+</ul>
+</blockquote>
+<h2 id="自定義Header"><a href="#自定義Header" class="headerlink" title="自定義Header"></a>自定義Header</h2><p>剛上面的方法很像，只是將token放在Header中的自定義欄位。</p>
+<h2 id="Double-Submit-Cookie"><a href="#Double-Submit-Cookie" class="headerlink" title="Double Submit Cookie"></a>Double Submit Cookie</h2><p>這方法也是使用token，差別在於server端的session不需要存放token。<br>而是將它放在client端的cookie上，送出請求時server端去比較form和cookie裡的csrftoken是否相同，來驗證請求是否合法。<br>由於第三方基本上無法去修改不同domain的cookie，所以不用擔心<code>your-site.com</code>的cookie被修改。</p>
+<h2 id="使用SameSite-cookie"><a href="#使用SameSite-cookie" class="headerlink" title="使用SameSite cookie"></a>使用SameSite cookie</h2><p><a href="https://www.chromestatus.com/feature/4672634709082112" target="_blank" rel="external">SameSite cookie</a><br>這是瀏覽器端的解法，從源頭去根絕這個問題。<br>也就是說明確定好，此cookie只用於same site，在其他站點發出的請求都不會帶上。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-Cookie: session_id=123213213; SameSite</span><br></pre></td></tr></table></figure></p>
+<p>而他又分成兩個模式<code>Lax</code>和<code>Strict</code><br>預設的<code>Strict</code>模式較嚴格，會導致明明我已經登入過了，但單純的導頁link過去，因為不能帶上cookie所以我變成沒有登入了。<br>而<code>Lax</code>則只在GET方法會帶上cookie，而POST、POST、PUT、DELETE若是不同站點則不會帶。</p>
+<blockquote>
+<p>壞處：</p>
+<ul>
+<li>瀏覽器的支援度不夠高</li>
+</ul>
+</blockquote>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>沒有什麼碰過後端，這方面的知識跟經驗都太不足了，其實有許多地方目前都還似懂非懂的，這篇文章我想很難有不出錯的地方，但還是先記下來，以後有機會再來回顧改寫吧</p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><p><a href="http://blog.techbridge.cc/2017/02/25/csrf-introduction/" target="_blank" rel="external">TechBridge - 讓我們來談談 CSRF</a><br><a href="https://github.com/pillarjs/understanding-csrf/blob/master/README_zh.md" target="_blank" rel="external">理解CSRF</a><br><a href="http://www.cnblogs.com/ziyunfei/p/5637945.html" target="_blank" rel="external">SameSite Cookie，防止 CSRF 攻击</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/blog/2017/02/25/planning-redux/" data-toggle="tooltip" data-placement="top"
+                           title="store, action, reducer規劃">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#白話的CSRF"><span class="toc-text">白話的CSRF</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#很廢的例子"><span class="toc-text">很廢的例子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#簡單防禦"><span class="toc-text">簡單防禦</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GET是Idempotent的"><span class="toc-text">GET是Idempotent的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不兼容舊版瀏覽器"><span class="toc-text">不兼容舊版瀏覽器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#server端驗證Referer欄位"><span class="toc-text">server端驗證Referer欄位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在發出請求時帶入token"><span class="toc-text">在發出請求時帶入token</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定義Header"><span class="toc-text">自定義Header</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Double-Submit-Cookie"><span class="toc-text">Double Submit Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用SameSite-cookie"><span class="toc-text">使用SameSite cookie</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#結語"><span class="toc-text">結語</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#參考資料"><span class="toc-text">參考資料</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/blog/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/blog/tags/#security"
+                           title="security">security</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/RyanTan.YT">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/tancc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/yin-ting-tan-172184b5">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Tan 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/blog/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/blog/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/blog/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://tancc.github.io/blog/blog/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10003519_623356174385513_1929844211_n.jpg?oh=cfb625a8fa42f1ba846175a29b200ed6&amp;oe=59366A76">
+</body>
+
+</html>
