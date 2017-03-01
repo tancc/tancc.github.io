@@ -387,7 +387,9 @@ article blockquote footer{
 .intro-header .post-heading{
     color: #fff;
 }
-
+.post-heading {
+    background: rgba(0, 0, 0, 0.25)
+}
 .intro-header .site-heading h1,
 .intro-header .page-heading h1,
 .intro-header .post-heading h1 {

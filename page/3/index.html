@@ -22,7 +22,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://tancc.github.io/blog/blog/tags/redux/">
+    <link rel="canonical" href="http://tancc.github.io/blog/blog/page/3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
@@ -43,8 +43,8 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="true
-" data-ishome = "false" >
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+" data-ishome = "true" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -133,6 +133,131 @@
 <!-- Main Content -->
 
 
+<style>
+
+    .custom-haojen-container .post-preview:nth-of-type(1),
+    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
+        text-align: center;
+        background-repeat: no-repeat;
+        border-radius: 3px;
+        background-size: cover;
+        padding: 0;
+        height: 300px;
+        display: table;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.16);
+    }
+
+    /*去掉诗歌的背景图片*/
+    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
+        background-image: none !important;
+        background-color: rgba(255, 248, 220, 0.5);
+    }
+
+    .custom-haojen-container .post-preview:nth-child(1) h2,
+    .custom-haojen-container .post-preview:nth-child(1) .post-meta,
+    .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+        text-shadow: 0 0 40px rgba(0, 0, 0, 1);
+        letter-spacing: 1px;
+        color: #fff;
+        margin-top: 0;
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+
+    .custom-haojen-container .post-preview:nth-child(1) .post-meta {
+        font-size: .9em;
+        font-weight: 300;
+        margin-top: 0;
+    }
+
+    .custom-haojen-container .post-preview-poetry:nth-child(1) .post-subtitle {
+        letter-spacing: 6px;
+        font-size: 18px;
+        font-family: unset;
+        font-weight: 400;
+        color: rgba(0, 0, 0, .75)
+    }
+
+    /*不显示摘要*/
+    .custom-haojen-container .post-preview:nth-child(1) .post-content-preview {
+    }
+    .custom-haojen-container .post-preview:nth-child(1) .post-content-preview > p{
+        color: white;
+        // display: none
+    }
+
+    /*只第一个显示背景图片*/
+    .custom-haojen-container .post-preview:not(:nth-child(1)) {
+        background-image: none !important;
+    }
+
+    /*第一个分界线去掉*/
+    .custom-haojen-container hr:nth-of-type(1) {
+        display: none;
+    }
+
+    /*主题*/
+    .custom-haojen-container .post-preview:nth-of-type(1) > a {
+            background: rgba(0,0,0,.3);
+        
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    /*诗词标题*/
+    .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
+        font-size: 35px;
+        font-family: STKaiti;
+        color: rgba(0, 0, 0, .8);
+    }
+
+    .custom-haojen-container .post-preview-poetry:nth-of-type(1) .post-meta {
+        color: #0e2231;
+    }
+
+    @media (max-width: 768px) {
+        .custom-haojen-container .post-preview:nth-child(1) {
+            height: 240px;
+        }
+
+        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
+            font-size: 28px !important;
+            margin-top: 0;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .custom-haojen-container .post-preview:nth-of-type(1) > a {
+            padding: 20px
+        }
+    }
+
+    /*手机屏幕*/
+    @media (max-width: 400px) {
+        .custom-haojen-container .post-preview:nth-child(1) {
+            height: 195px;
+        }
+
+        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
+            font-size: 20px !important;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
+            font-size: 16px;
+        }
+
+        .custom-haojen-container .post-preview:nth-child(1) a {
+            padding: 30px 20px;
+        }
+    }
+</style>
+
 <!-- Page Header -->
 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
     <div class="row">
@@ -161,97 +286,18 @@
 
 <div class="post-preview "
      style="background-image: url('')">
-    <a href="/blog/2017/02/25/planning-redux/">
+    <a href="/blog/2016/01/08/EC2_node環境設置(centos_amazon-linux)/">
         <h2 class="post-title">
-            store, action, reducer規劃
+            EC2 node 開發環境設置(centos/amazon-linux)
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-02-25
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-01-08
         </p>
         
         <div class="post-content-preview">
             <p>
-                紀錄store的規劃，以及非同步請求的actions與reducers的設計思路(使用redux-thunk)
-
-Store
-根據主要domain來存放這裡的domain指的是在APP裡不同主題的頁面、使用者資訊、設定等等主要的場域。
-12345678910&#123;  channel: &#..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/blog/2016/10/09/react-redux-better-practice/">
-        <h2 class="post-title">
-            React、Redux應用較好的實踐
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-10-09
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                整理在專案開發時、在網路看文章時覺得不錯的實踐，不敢說最佳(best)只敢用較好(better)XD。
-
-使用Destructuring assignment一般我的們component常常會有這種寫法12345678910111213render() &#123;  return    &lt..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/blog/2016/07/23/async_action_in_react/">
-        <h2 class="post-title">
-            react 處理非同步action的對策
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-07-23
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                在開發時，時常會有需要發一個action，然後去向後端拿資料的動作。而這整個請求資料的行為是非同步的，因此在執行時還需要處理一些UI上的互動，如“載入中”、“發生錯誤”、“順利取得資料”。
-這篇文分使用的範例應用為，輸入一個group的名稱，然會取得其成員的列表範例可以在此取得
-這篇文章分三部分..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/blog/2016/02/25/learn-redux/">
-        <h2 class="post-title">
-            Redux筆記
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-02-25
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                三大原則
-應用程式的所有狀態(state)，會被保存在一個Javascript的物件中
-在Redux中，state tree 是read-only。想要改變state唯有dispatch an action
-Reducer(描述state會如何變化)此函式，接收”發送的action”｀”前一個狀..
+                1: Install gcc, make and git123sudo yum install gcc-c++ makesudo yum install openssl-develsudo yum install git
+2: Install node12345git clone https:/..
             </p>
         </div>
     </a>
@@ -266,6 +312,10 @@ Reducer(描述state會如何變化)此函式，接收”發送的action”｀”
 <!-- 翻页 pager -->
 
 <ul class="pager">
+    
+    <li class="previous">
+        <a href="/blog/page/2/">&larr; Newer Posts</a>
+    </li>
     
     
 </ul>
