@@ -80,7 +80,7 @@
                         
 							
                         <li>
-                            <a href="/blog/tags/">tags</a>
+                            <a href="/blog/archives/">archives</a>
                         </li>
 							
 						
@@ -88,7 +88,7 @@
                         
 							
                         <li>
-                            <a href="/blog/archives/">archives</a>
+                            <a href="/blog/tags/">tags</a>
                         </li>
 							
 						
@@ -161,6 +161,43 @@
 
 <div class="post-preview "
      style="background-image: url('')">
+    <a href="/blog/2017/03/03/react-test/">
+        <h2 class="post-title">
+            寫React的unit test
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-03
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                跟一般測試其實沒有什麼大不同
+
+先把規格盤點出來
+
+由淺到深寫測試，亮紅燈
+
+再來寫component/action/reducer來亮綠燈
+
+
+
+使用工具Jest
+Enzyme
+目前看起來就是這兩者為主流，目前也還在學習中…
+一些參考資料
+Testing JavaScript with Jes..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('')">
     <a href="/blog/2017/03/01/tdd-with-leetcode/">
         <h2 class="post-title">
             用leetcode練習TDD
@@ -176,7 +213,8 @@
 我第一個實作就也打算從219開始了，之後會不定期更新。
 Gihub Repo
 219. Contains Duplicate II
-Gi..
+
+G..
             </p>
         </div>
     </a>
@@ -199,12 +237,11 @@ Gi..
         
         <div class="post-content-preview">
             <p>
-                說來慚愧，一直都有聽過這專有名詞，但沒有好好去瞭解過，真是太不專業了…
+                說來慚愧，一直都有聽過這專有名詞，但沒有好好去瞭解過，真是太不專業了...
 最近剛好要為自己好好打底，就趁這個機會來記錄一下CSRF吧！
-
-
-白話的CSRFCSRF(Cross-Site Request Forgery，跨站點偽造請求)，簡單的說就是在使用者不知情的情況下，冒用身份去發出請求。
-也就..
+&lt;hr/&gt;
+白話的CSRF
+CSRF(Cross-Site Request Forgery，跨站點偽造請求)，簡單的說就是在使用者不知情的情況下，..
             </p>
         </div>
     </a>
@@ -228,10 +265,15 @@ Gi..
         <div class="post-content-preview">
             <p>
                 紀錄store的規劃，以及非同步請求的actions與reducers的設計思路(使用redux-thunk)
-
+&lt;hr /&gt;
 Store
-根據主要domain來存放這裡的domain指的是在APP裡不同主題的頁面、使用者資訊、設定等等主要的場域。
-12345678910&#123;  channel: &#..
+
+
+根據主要domain來存放
+
+
+這裡的domain指的是在APP裡不同主題的頁面、使用者資訊、設定等等主要的場域。
+12345678910&#..
             </p>
         </div>
     </a>
@@ -254,7 +296,10 @@ Store
         
         <div class="post-content-preview">
             <p>
-                JSON.stringify會將傳進去的第一個參數，序列化為字串除了undefined、function、symbol123JSON.stringify(undefined) // undefinedJSON.stringify(()=&gt;&#123;&#125;)) // undefine..
+                JSON.stringify
+會將傳進去的第一個參數，序列化為字串
+除了undefined、function、symbol
+123JSON.stringify(undefined) // undefinedJSON.stringify(()=&gt;&#123;&#125;)) // undef..
             </p>
         </div>
     </a>
@@ -278,8 +323,10 @@ Store
         <div class="post-content-preview">
             <p>
                 整理在專案開發時、在網路看文章時覺得不錯的實踐，不敢說最佳(best)只敢用較好(better)XD。
-
-使用Destructuring assignment一般我的們component常常會有這種寫法12345678910111213render() &#123;  return    &lt..
+&lt;hr /&gt;
+&lt;a name=&quot;use_destruturing_assignment&quot;&gt;
+使用Destructuring assignment
+一..
             </p>
         </div>
     </a>
@@ -302,8 +349,10 @@ Store
         
         <div class="post-content-preview">
             <p>
-                javascript有許多測試框架，較出名的如Mocha、Jasmine等等。近年比較廣受好評的則是這篇要介紹的AVA
-AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promise..
+                javascript有許多測試框架，較出名的如Mocha、Jasmine等等。
+近年比較廣受好評的則是這篇要介紹的AVA
+AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。
+此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promi..
             </p>
         </div>
     </a>
@@ -327,8 +376,11 @@ AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併�
         <div class="post-content-preview">
             <p>
                 內容主要出自於“javascript設計模式與開發實踐”這本書，針對書內所介紹的設計模式部分做簡短的紀錄。
-
-單例模式主要精神就是－保證一個類別只會有一個實例，並提供全域存取。放到JS中，也就是去確保某個物件只會被生成一次。實作上的關鍵在於，用一個變數去儲存單例，以這個變數去判斷物件被生成過了沒..
+&lt;hr/&gt;
+單例模式
+主要精神就是－保證一個類別只會有一個實例，並提供全域存取。
+放到JS中，也就是去確保某個物件只會被生成一次。
+實作上的關鍵在於，用一個變數去儲存單例，以這..
             </p>
         </div>
     </a>
@@ -351,9 +403,12 @@ AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併�
         
         <div class="post-content-preview">
             <p>
-                在開發時，時常會有需要發一個action，然後去向後端拿資料的動作。而這整個請求資料的行為是非同步的，因此在執行時還需要處理一些UI上的互動，如“載入中”、“發生錯誤”、“順利取得資料”。
-這篇文分使用的範例應用為，輸入一個group的名稱，然會取得其成員的列表範例可以在此取得
-這篇文章分三部分..
+                在開發時，時常會有需要發一個action，然後去向後端拿資料的動作。
+而這整個請求資料的行為是非同步的，因此在執行時還需要處理一些UI上的互動，如“載入中”、“發生錯誤”、“順利取得資料”。
+這篇文分使用的範例應用為，輸入一個group的名稱，然會取得其成員的列表
+
+範例可以在此取得
+這篇文章分..
             </p>
         </div>
     </a>
@@ -377,35 +432,8 @@ AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併�
         <div class="post-content-preview">
             <p>
                 記錄在You Dont Know Javascript中看到的這個部分。這部分我認為是一般比較少接觸的地方，但其實也算是重要的，在滿多第三方套件其實都有用到這功能來實作。
-
-
-特性描述器(Property Descriptors也稱作)Data Descriptors，因為他們做用於存放一個值(..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/blog/2016/07/10/haskell-note/">
-        <h2 class="post-title">
-            haskell_note
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-07-10
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                學習資源CIS 194Learn you a haskell
-
-
-total / partial functionpartial function: 當函式，不能對應其所定義的型別參數的所有可能性，稱之partial function。如：head tail div (!!)total func..
+&lt;hr /&gt;
+特性描述器(Property Descriptors也稱作)Data Descriptors，因為..
             </p>
         </div>
     </a>
@@ -503,6 +531,11 @@ total / partial functionpartial function: 當函式，不能對應其所定義�
                     
                     
                     
+                    <a href="/blog/tags/#javascript" title="javascript"
+                       rel="8">javascript</a>
+                    
+                    
+                    
                     <a href="/blog/tags/#linux" title="linux"
                        rel="2">linux</a>
                     
@@ -518,24 +551,22 @@ total / partial functionpartial function: 當函式，不能對應其所定義�
                     
                     
                     
-                    <a href="/blog/tags/#javascript" title="javascript"
-                       rel="8">javascript</a>
-                    
-                    
-                    
-                    
+                    <a href="/blog/tags/#test" title="test"
+                       rel="2">test</a>
                     
                     
                     
                     
                     
                     <a href="/blog/tags/#react" title="react"
-                       rel="3">react</a>
+                       rel="4">react</a>
                     
                     
                     
                     <a href="/blog/tags/#redux" title="redux"
                        rel="4">redux</a>
+                    
+                    
                     
                     
                     

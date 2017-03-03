@@ -80,7 +80,7 @@
                         
 							
                         <li>
-                            <a href="/blog/tags/">tags</a>
+                            <a href="/blog/archives/">archives</a>
                         </li>
 							
 						
@@ -88,7 +88,7 @@
                         
 							
                         <li>
-                            <a href="/blog/archives/">archives</a>
+                            <a href="/blog/tags/">tags</a>
                         </li>
 							
 						
@@ -171,7 +171,10 @@
         
         <div class="post-content-preview">
             <p>
-                JSON.stringify會將傳進去的第一個參數，序列化為字串除了undefined、function、symbol123JSON.stringify(undefined) // undefinedJSON.stringify(()=&gt;&#123;&#125;)) // undefine..
+                JSON.stringify
+會將傳進去的第一個參數，序列化為字串
+除了undefined、function、symbol
+123JSON.stringify(undefined) // undefinedJSON.stringify(()=&gt;&#123;&#125;)) // undef..
             </p>
         </div>
     </a>
@@ -194,8 +197,10 @@
         
         <div class="post-content-preview">
             <p>
-                javascript有許多測試框架，較出名的如Mocha、Jasmine等等。近年比較廣受好評的則是這篇要介紹的AVA
-AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promise..
+                javascript有許多測試框架，較出名的如Mocha、Jasmine等等。
+近年比較廣受好評的則是這篇要介紹的AVA
+AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。
+此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promi..
             </p>
         </div>
     </a>
@@ -219,8 +224,11 @@ AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併�
         <div class="post-content-preview">
             <p>
                 內容主要出自於“javascript設計模式與開發實踐”這本書，針對書內所介紹的設計模式部分做簡短的紀錄。
-
-單例模式主要精神就是－保證一個類別只會有一個實例，並提供全域存取。放到JS中，也就是去確保某個物件只會被生成一次。實作上的關鍵在於，用一個變數去儲存單例，以這個變數去判斷物件被生成過了沒..
+&lt;hr/&gt;
+單例模式
+主要精神就是－保證一個類別只會有一個實例，並提供全域存取。
+放到JS中，也就是去確保某個物件只會被生成一次。
+實作上的關鍵在於，用一個變數去儲存單例，以這..
             </p>
         </div>
     </a>
@@ -243,7 +251,9 @@ AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併�
         
         <div class="post-content-preview">
             <p>
-                let &amp; const原本js都為function scope，但是時常會出現一些情形，會意外地使得變數污染到全域。123456789for(var i = 0; i &lt; 10; i++) &#123;  console.log(i);&#125;console.log(i); /..
+                let &amp; const
+原本js都為function scope，但是時常會出現一些情形，會意外地使得變數污染到全域。
+123456789for(var i = 0; i &lt; 10; i++) &#123;  console.log(i);&#125;console.log(i);..
             </p>
         </div>
     </a>
@@ -266,10 +276,12 @@ AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併�
         
         <div class="post-content-preview">
             <p>
-                內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。
-first-class object在JS中函式是first-class object，什麼是first-class object？
+                內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。
+這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。
+first-class object
+在JS中函式是first-class object，什麼是first-class object？
 
-可透過字面值(..
+可透過字面..
             </p>
         </div>
     </a>
@@ -292,8 +304,9 @@ first-class object在JS中函式是first-class object，什麼是first-class obj
         
         <div class="post-content-preview">
             <p>
-                partial application 和 currying 是 functional programming中常見的東西，不過我沒學過FP就是了…而在JS又是如何實現的呢？
-網路上有滿多文章把這兩者混在一起解釋了，他們兩者都是將函式做轉換，但最後轉換出來的函式執行後的結果跟原函式是一樣的。經過..
+                partial application 和 currying 是 functional programming中常見的東西，不過我沒學過FP就是了...
+而在JS又是如何實現的呢？
+網路上有滿多文章把這兩者混在一起解釋了，他們兩者都是將函式做轉換，但最後轉換出來的函式執行後的結果跟原函式是一樣的..
             </p>
         </div>
     </a>
@@ -316,7 +329,8 @@ first-class object在JS中函式是first-class object，什麼是first-class obj
         
         <div class="post-content-preview">
             <p>
-                這幾天重新認識了JS中物件導向的一些概念，尤其是prototype這塊的概念。在ES6中加入了class但並不代表JS就有了類別，他只是個語法糖背後還是prototype-based，而且使用class背後其實還會有一些隱憂存在著，若一開始就直接使用class其實會對JS有一些錯誤的認知(我就是..
+                這幾天重新認識了JS中物件導向的一些概念，尤其是prototype這塊的概念。
+在ES6中加入了class但並不代表JS就有了類別，他只是個語法糖背後還是prototype-based，而且使用class背後其實還會有一些隱憂存在著，若一開始就直接使用class其實會對JS有一些錯誤的認知(我就..
             </p>
         </div>
     </a>
@@ -339,13 +353,26 @@ first-class object在JS中函式是first-class object，什麼是first-class obj
         
         <div class="post-content-preview">
             <p>
-                有些javascript的語言特性是一些初學課程不會提到的，而很有可能在之後的程式中就因此發生了bug而不自知，這裡就幾個部分來精簡說明
+                有些javascript的語言特性是一些初學課程不會提到的，而很有可能在之後的程式中就因此發生了bug而不自知，
+這裡就幾個部分來精簡說明
+
 
 Pass by What
+
+
 Equality
+
+
 Function Scope
+
+
 Hoisting
-This這裡都講得滿粗淺的，目的是要快速瞭解大概，因此講的不嚴謹..
+
+
+This
+
+
+這裡都講得滿粗淺的，目的是要快..
             </p>
         </div>
     </a>
@@ -439,6 +466,11 @@ This這裡都講得滿粗淺的，目的是要快速瞭解大概，因此講的�
                     
                     
                     
+                    <a href="/blog/tags/#javascript" title="javascript"
+                       rel="8">javascript</a>
+                    
+                    
+                    
                     <a href="/blog/tags/#linux" title="linux"
                        rel="2">linux</a>
                     
@@ -454,24 +486,22 @@ This這裡都講得滿粗淺的，目的是要快速瞭解大概，因此講的�
                     
                     
                     
-                    <a href="/blog/tags/#javascript" title="javascript"
-                       rel="8">javascript</a>
-                    
-                    
-                    
-                    
+                    <a href="/blog/tags/#test" title="test"
+                       rel="2">test</a>
                     
                     
                     
                     
                     
                     <a href="/blog/tags/#react" title="react"
-                       rel="3">react</a>
+                       rel="4">react</a>
                     
                     
                     
                     <a href="/blog/tags/#redux" title="redux"
                        rel="4">redux</a>
+                    
+                    
                     
                     
                     

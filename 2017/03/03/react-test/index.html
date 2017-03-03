@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        haskell_note｜Tan&#39;s Note
+        寫React的unit test｜Tan&#39;s Note
         
     </title>
 
-    <link rel="canonical" href="http://tancc.github.io/blog/blog/2016/07/10/haskell-note/">
+    <link rel="canonical" href="http://tancc.github.io/blog/blog/2017/03/03/react-test/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
@@ -153,18 +153,21 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>haskell_note</h1>
+                    <h1>寫React的unit test</h1>
                     
                     <span class="meta">
                          作者 Tan
                         <span>
-                          日期 2016-07-10
+                          日期 2017-03-03
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/blog/tags/#haskell"
-                           title="haskell">haskell</a>
+                        <a class="tag" href="/blog/tags/#test"
+                           title="test">test</a>
+                        
+                        <a class="tag" href="/blog/tags/#react"
+                           title="react">react</a>
                         
                     </div>
                 </div>
@@ -173,7 +176,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            haskell_note
+            寫React的unit test
         </span>
     </div>
 </header>
@@ -184,35 +187,65 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>學習資源
-<a href="http://www.seas.upenn.edu/~cis194/lectures.html" target="_blank" rel="external">CIS 194</a>
-<a href="http://learnyoua.haskell.sg/content/zh-tw/" target="_blank" rel="external">Learn you a haskell</a>
-&lt;hr /&gt;</p>
-<h2>total / partial function</h2>
-<p>partial function: 當函式，不能對應其所定義的型別參數的所有可能性，稱之partial function。如：<code>head tail div (!!)</code>
-total function: 反之則稱為total function</p>
-<h2>(.) operator</h2>
-<p>用來組合函式用的
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(.) :: (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c</span><br><span class="line">(.) f g x = f (g x)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 將list中的數值先加一再乘四</span></span><br><span class="line"><span class="title">add1Mul4</span> :: [<span class="type">Int</span>] -&gt; [<span class="type">Int</span>]</span><br><span class="line"><span class="title">add1Mul4</span> x = map ((*<span class="number">4</span>) . (+<span class="number">1</span>)) x</span><br></pre></td></tr></table></figure></p>
-<h2>($) operator</h2>
-<p>用來代替<code>()</code>
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">($) :: (a -&gt; b) -&gt; a -&gt; b</span><br><span class="line"><span class="title">f</span> $ x = f x</span><br><span class="line"></span><br><span class="line"><span class="comment">--將list中為偶數的數量變為負數</span></span><br><span class="line"><span class="title">negateNumEvens1</span> :: [<span class="type">Int</span>] -&gt; <span class="type">Int</span></span><br><span class="line"><span class="title">negateNumEvens1</span> x = negate (length (filter even x))</span><br><span class="line"><span class="comment">-- 等同於</span></span><br><span class="line"><span class="title">negateNumEvens1</span> x = negate $ length $ filter even x</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line"><span class="meta">## Lambda</span></span><br><span class="line">也就是匿名函式(anonymous function) 或稱lambda expression</span><br><span class="line">```haskell</span><br><span class="line"><span class="comment">-- 將list中的數值都加二</span></span><br><span class="line"><span class="title">addTwo</span> = map (\x -&gt; x + <span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
-<p><code>\</code>在Haskell中是來表示λ用的</p>
+                <p>跟一般測試其實沒有什麼大不同</p>
+<ol>
+<li><p>先把規格盤點出來</p>
+</li>
+<li><p>由淺到深寫測試，亮紅燈</p>
+</li>
+<li><p>再來寫component/action/reducer來亮綠燈</p>
+</li>
+</ol>
+<hr>
+<h1 id="使用工具"><a href="#使用工具" class="headerlink" title="使用工具"></a>使用工具</h1><p><a href="https://facebook.github.io/jest" target="_blank" rel="external">Jest</a></p>
+<p><a href="http://airbnb.io/enzyme/" target="_blank" rel="external">Enzyme</a></p>
+<p>目前看起來就是這兩者為主流，目前也還在學習中…</p>
+<p>一些參考資料</p>
+<p><a href="https://egghead.io/playlists/testing-javascript-with-jest-a36c4074" target="_blank" rel="external">Testing JavaScript with Jest (egghead.io)</a></p>
+<p><a href="https://github.com/kentcdodds/react-jest-workshop" target="_blank" rel="external">react-jest-workshop</a></p>
+<p><a href="https://auth0.com/blog/testing-react-applications-with-jest/?utm_source=facebookgroups&amp;utm_medium=sc&amp;utm_campaign=testing_react_jest" target="_blank" rel="external">Testing React Applications with Jest</a></p>
+<p><a href="https://daveceddia.com/getting-started-with-tdd-in-react/" target="_blank" rel="external">Getting Started with TDD in React (with Enzyme)</a></p>
+<h1 id="資料夾結構"><a href="#資料夾結構" class="headerlink" title="資料夾結構"></a>資料夾結構</h1><p>另開一個<code>tests</code>的資料夾來放測試<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- components</span><br><span class="line">- reducers</span><br><span class="line">- actions</span><br><span class="line">- tests</span><br><span class="line">-- components</span><br><span class="line">-- reducers</span><br><span class="line">-- actions</span><br></pre></td></tr></table></figure></p>
+<p>在原本的資料夾<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- components</span><br><span class="line">--- App</span><br><span class="line">----- index.js</span><br><span class="line">----- index.spec.js</span><br><span class="line">- reducers</span><br><span class="line">--- comments</span><br><span class="line">----- index.js</span><br><span class="line">----- index.spec.js</span><br></pre></td></tr></table></figure></p>
+<p>諸如此類的…</p>
+<p>若是搭配用<a href="https://github.com/erikras/ducks-modular-redux" target="_blank" rel="external">ducks-modular-redux</a>這種結構，<code>reducers</code>, <code>actions</code>的測試就會比較方便一些</p>
+<h1 id="基本的測試內容"><a href="#基本的測試內容" class="headerlink" title="基本的測試內容"></a>基本的測試內容</h1><h2 id="Component"><a href="#Component" class="headerlink" title="Component"></a>Component</h2><ul>
+<li>有正確render</li>
+</ul>
+<blockquote>
+<p>如特定class的元素(<code>.comment-box</code>, <code>.comment-list</code>)，或含有特定元素(<code>textarea</code>, <code>button</code>)</p>
+</blockquote>
+<ul>
+<li>simulate事件</li>
+</ul>
+<blockquote>
+<p>如<code>onChange</code>後，顯示的結果要正確。按下submit按鈕後，文字要清空等等</p>
+</blockquote>
+<p>我認為component的測試內容不用到太過細節，只要必要的東西有就好了，保留其修改的彈性。</p>
+<p>而重點要擺在最原子化的單元component，只要這些atom component有做好測試，後面就不需要做太多事情了。也就是說，如何切分component就會是一個關鍵。</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><ul>
+<li>action creator所返回的物件有正確的type</li>
+<li>action creator所返回的物件有正確的payload</li>
+</ul>
+<h2 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer"></a>Reducer</h2><p>只測試reducer所要handle的action type。需要用fake的action去測試<code>const action = {...}</code></p>
+<ul>
+<li>面對unknow的action要返回正確的預設值(redux初始化)</li>
+<li>面對要handle的action，結果要如預期</li>
+<li>state轉換要正確(從actionA 到 actionB)</li>
+</ul>
+<hr>
+<h1 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h1><p>聽起來好像滿廢話的……</p>
+<p>但做好測試能減少之後debug的工很多，這也是我之後要去習慣的（因為之前也都沒在寫測試啊～）</p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/blog/2016/07/14/more_about_object/" data-toggle="tooltip" data-placement="top"
-                           title="物件相關的更多行為">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/blog/2016/02/25/learn-redux/" data-toggle="tooltip" data-placement="top"
-                           title="Redux筆記">Next Post &rarr;</a>
+                        <a href="/blog/2017/03/01/tdd-with-leetcode/" data-toggle="tooltip" data-placement="top"
+                           title="用leetcode練習TDD">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -225,7 +258,7 @@ total function: 反之則稱為total function</p>
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">total / partial function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">(.) operator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">($) operator</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用工具"><span class="toc-text">使用工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#資料夾結構"><span class="toc-text">資料夾結構</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本的測試內容"><span class="toc-text">基本的測試內容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Component"><span class="toc-text">Component</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Action"><span class="toc-text">Action</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reducer"><span class="toc-text">Reducer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#結語"><span class="toc-text">結語</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -247,8 +280,11 @@ total function: 反之則稱為total function</p>
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/blog/tags/#haskell"
-                           title="haskell">haskell</a>
+                        <a class="tag" href="/blog/tags/#test"
+                           title="test">test</a>
+                        
+                        <a class="tag" href="/blog/tags/#react"
+                           title="react">react</a>
                         
                     </div>
                 </section>
