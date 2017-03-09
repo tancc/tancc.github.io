@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        JSON.stringify｜Tan&#39;s Note
+        CSS選擇器(&gt;, +, ~, * + *)｜Tan&#39;s Note
         
     </title>
 
-    <link rel="canonical" href="http://tancc.github.io/blog/blog/2017/02/06/JSON-stringify/">
+    <link rel="canonical" href="http://tancc.github.io/blog/blog/2016/11/09/css-selector-note/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/blog/css/bootstrap.min.css">
@@ -135,13 +135,14 @@
 <!--only post-->
 
 
-<img class="wechat-title-img" src="https://unsplash.it/600/300/?random">
+<img class="wechat-title-img"
+     src="https://unsplash.it/600/300/?random">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('https://unsplash.it/600/300/?random');
+        background-image: url('https://unsplash.it/600/300/?random')
     }
 
     
@@ -152,18 +153,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>JSON.stringify</h1>
+                    <h1>CSS選擇器(&gt;, +, ~, * + *)</h1>
                     
                     <span class="meta">
                          作者 Tan
                         <span>
-                          日期 2017-02-06
+                          日期 2016-11-09
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/blog/tags/#javascript"
-                           title="javascript">javascript</a>
+                        <a class="tag" href="/blog/tags/#css"
+                           title="css">css</a>
                         
                     </div>
                 </div>
@@ -172,7 +173,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            JSON.stringify
+            CSS選擇器(>, +, ~, * + *)
         </span>
     </div>
 </header>
@@ -183,22 +184,33 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2>JSON.stringify</h2>
-<p>會將傳進去的第一個參數，序列化為字串
-除了<code>undefined</code>、<code>function</code>、<code>symbol</code>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify(<span class="literal">undefined</span>) <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify(()=&gt;&#123;&#125;)) <span class="comment">// undefined</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify(<span class="built_in">Symbol</span>(<span class="string">'test'</span>)) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure></p>
-<p>將陣列中的<code>undefined</code>轉為<code>null</code>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify([<span class="number">1</span>,<span class="literal">null</span>,<span class="number">2</span>,<span class="literal">undefined</span>,<span class="number">3</span>]) <span class="comment">// "[1,null,2,null,3]"</span></span><br></pre></td></tr></table></figure></p>
-<p>當object的某個值為<code>undefined</code>時，會直接忽略那組key-value
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify(&#123;id: <span class="number">1</span>, name: <span class="literal">undefined</span>&#125;) <span class="comment">// "&#123;"id":1&#125;"</span></span><br></pre></td></tr></table></figure></p>
-<p>當object內的值有循環引用時會報錯
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> temp = &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> temp2 = &#123;a: temp&#125;</span><br><span class="line">temp.b = temp2;</span><br><span class="line"><span class="built_in">JSON</span>.stringify(temp) <span class="comment">// Uncaught TypeError: Converting circular structure to JSON...</span></span><br></pre></td></tr></table></figure></p>
-<p>當傳入的物件有定義<code>toJSON</code>這個function時，會改為呼叫他
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;&#125;</span><br><span class="line">a.toJSON = () =&gt; (&#123;id: <span class="number">1</span>&#125;)</span><br><span class="line"><span class="built_in">JSON</span>.stringify(a) <span class="comment">// "&#123;"id":1&#125;"</span></span><br></pre></td></tr></table></figure></p>
-<p>第二個參數就比較少人在用了
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//當第二個參數為array時,只有出現在array裡的key才會被序列化</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify(&#123;a: <span class="number">1</span>, b: <span class="number">2</span>, c: <span class="number">3</span>, d: <span class="number">4</span>&#125;, [<span class="string">'b'</span>, <span class="string">'d'</span>]) <span class="comment">// "&#123;"b":2,"d":4&#125;"</span></span><br><span class="line"><span class="comment">// 當第二個參數為function時, 可自行定義要回傳被序列化的東西，有點類似filter的感覺。</span></span><br><span class="line"><span class="comment">// 而傳進此funciton的參數分別為物件的key和value。</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify(&#123;a: <span class="number">1</span>, b: <span class="number">2</span>, c: <span class="number">3</span>, d: <span class="number">4</span>&#125;, (k, v) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> k !== <span class="string">'b'</span> ? v : <span class="literal">undefined</span>;</span><br><span class="line">&#125;) <span class="comment">// "&#123;"a":1,"c":3,"d":4&#125;"</span></span><br></pre></td></tr></table></figure></p>
-<p>第三個參數用在輸出後字串的縮排
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  b: <span class="number">2</span>,</span><br><span class="line">  c: &#123;cc: <span class="number">3</span>, cc2: <span class="number">4</span>&#125;,</span><br><span class="line">  d: [<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//當第三個參數為數字時，表示縮排得空格長度</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify(o, <span class="literal">null</span>, <span class="number">4</span>) </span><br><span class="line"><span class="comment">/*</span><br><span class="line">"&#123;</span><br><span class="line">    "a": 1,</span><br><span class="line">    "b": 2,</span><br><span class="line">    "c": &#123;</span><br><span class="line">        "cc": 3,</span><br><span class="line">        "cc2": 4</span><br><span class="line">    &#125;,</span><br><span class="line">    "d": [</span><br><span class="line">        5,</span><br><span class="line">        6</span><br><span class="line">    ]</span><br><span class="line">&#125;"</span><br><span class="line">*/</span></span><br><span class="line"><span class="comment">//當第三個參數為字串時，縮排得空格會以此字串代替</span></span><br><span class="line"><span class="built_in">JSON</span>.stringify(o, <span class="literal">null</span>, <span class="string">'+'</span>) </span><br><span class="line"><span class="comment">/*</span><br><span class="line">"&#123;</span><br><span class="line">+"a": 1,</span><br><span class="line">+"b": 2,</span><br><span class="line">+"c": &#123;</span><br><span class="line">++"cc": 3,</span><br><span class="line">++"cc2": 4</span><br><span class="line">+&#125;,</span><br><span class="line">+"d": [</span><br><span class="line">++5,</span><br><span class="line">++6</span><br><span class="line">+]</span><br><span class="line">&#125;"</span><br><span class="line">*/</span></span><br></pre></td></tr></table></figure></p>
+                <p>css一直是我的痛嘖嘖，這裡就記錄一下這種種選擇器的用法</p>
+<h1>&gt; 選擇器</h1>
+<p>又稱為child selector，這個選擇器會選擇容器子層的元素(不含巢狀內層)</p>
+<p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"outer"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>one<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"inner"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>two<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>three<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"inner"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>four<span class="tag">&lt;/<span class="name">p</span>&gt;</span> </span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>five<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>six<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>若以選擇器<code>&gt;</code>加上樣式後
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.outer</span> &gt; <span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#3b64a5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://i.imgur.com/iJISK9I.png" alt="Alt selector_&amp;gt;"></p>
+<p>可以看到只有在<code>.outer</code>內層的<code>p</code>受到影響，而在更內部也就是<code>.inner</code>裡的不會改變</p>
+<hr>
+<h1>+ 選擇器</h1>
+<p>又稱做adjacent selector 或 next-sibling selector.，他會選中的是指定元素的&quot;同一層且下一個&quot;的元素
+以上面相同的範例為例子，這次所加入的樣式為：
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span> + <span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#3b64a5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://i.imgur.com/eGerhqf.png" alt="Alt selector_+"></p>
+<p>可以看到只有在跟<code>.inner</code>同層的下一個<code>p</code>受到影響</p>
+<hr>
+<h1>~ 選擇器</h1>
+<p>又稱sibling selectors，會選中同層且下方的&quot;所有&quot;目標元素
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.inner</span> + <span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#3b64a5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://i.imgur.com/sPV50jS.png" alt="Alt selector_~"></p>
+<hr>
+<h1>* + * 貓頭鷹選擇器</h1>
+<p>因為長得像貓頭鷹的臉所以有了這個名字，會選中所有&quot;下方帶有元素的元素&quot;</p>
+<p>如果用了這個樣式，所有元素，只要下方還皆有同層元素，這個同層元素都會吃到這個樣式
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* + * &#123;</span><br><span class="line">  margin-top: 1.5em;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://codepen.io/AllThingsSmitty/pen/grRvWq" target="_blank" rel="external">codepen參考</a></p>
+<p><a href="https://alistapart.com/article/axiomatic-css-and-lobotomized-owls" target="_blank" rel="external">更多內容</a></p>
 
                 <hr>
                 
@@ -206,14 +218,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/blog/2017/02/25/planning-redux/" data-toggle="tooltip" data-placement="top"
-                           title="store, action, reducer規劃">&larr; Previous Post</a>
+                        <a href="/blog/2017/02/06/JSON-stringify/" data-toggle="tooltip" data-placement="top"
+                           title="JSON.stringify">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/blog/2016/11/09/css-selector-note/" data-toggle="tooltip" data-placement="top"
-                           title="CSS選擇器(>, +, ~, * + *)">Next Post &rarr;</a>
+                        <a href="/blog/2016/10/09/react-redux-better-practice/" data-toggle="tooltip" data-placement="top"
+                           title="React、Redux應用較好的實踐">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -226,7 +238,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">JSON.stringify</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">> 選擇器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">+ 選擇器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">~ 選擇器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">* + * 貓頭鷹選擇器</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -248,8 +260,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/blog/tags/#javascript"
-                           title="javascript">javascript</a>
+                        <a class="tag" href="/blog/tags/#css"
+                           title="css">css</a>
                         
                     </div>
                 </section>
