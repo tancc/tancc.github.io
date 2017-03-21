@@ -286,6 +286,31 @@
 
 <div class="post-preview "
      style="background-image: url('')">
+    <a href="/blog/2016/07/23/async_action_in_react/">
+        <h2 class="post-title">
+            react 處理非同步action的對策
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-07-23
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                在開發時，時常會有需要發一個action，然後去向後端拿資料的動作。而這整個請求資料的行為是非同步的，因此在執行時還需要處理一些UI上的互動，如“載入中”、“發生錯誤”、“順利取得資料”。
+這篇文分使用的範例應用為，輸入一個group的名稱，然會取得其成員的列表範例可以在此取得
+這篇文章分三部分..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('')">
     <a href="/blog/2016/07/14/more_about_object/">
         <h2 class="post-title">
             物件相關的更多行為
@@ -297,8 +322,9 @@
         <div class="post-content-preview">
             <p>
                 記錄在You Dont Know Javascript中看到的這個部分。這部分我認為是一般比較少接觸的地方，但其實也算是重要的，在滿多第三方套件其實都有用到這功能來實作。
-&lt;hr /&gt;
-特性描述器(Property Descriptors也稱作)Data Descriptors，因為..
+
+
+特性描述器(Property Descriptors也稱作)Data Descriptors，因為他們做用於存放一個值(..
             </p>
         </div>
     </a>
@@ -321,12 +347,10 @@
         
         <div class="post-content-preview">
             <p>
-                學習資源
-CIS 194
-Learn you a haskell
-&lt;hr /&gt;
-total / partial function
-partial function: 當函式，不能對應其所定義的型別參數的所有可能性，稱之partial function。如：head tail div ..
+                學習資源CIS 194Learn you a haskell
+
+
+total / partial functionpartial function: 當函式，不能對應其所定義的型別參數的所有可能性，稱之partial function。如：head tail div (!!)total func..
             </p>
         </div>
     </a>
@@ -350,10 +374,9 @@ partial function: 當函式，不能對應其所定義的型別參數的所有�
         <div class="post-content-preview">
             <p>
                 三大原則
-
 應用程式的所有狀態(state)，會被保存在一個Javascript的物件中
 在Redux中，state tree 是read-only。想要改變state唯有dispatch an action
-Reducer(描述state會如何變化)此函式，接收”發送的action”｀”前一個..
+Reducer(描述state會如何變化)此函式，接收”發送的action”｀”前一個狀..
             </p>
         </div>
     </a>
@@ -376,9 +399,7 @@ Reducer(描述state會如何變化)此函式，接收”發送的action”｀”
         
         <div class="post-content-preview">
             <p>
-                let &amp; const
-原本js都為function scope，但是時常會出現一些情形，會意外地使得變數污染到全域。
-123456789for(var i = 0; i &lt; 10; i++) &#123;  console.log(i);&#125;console.log(i);..
+                let &amp; const原本js都為function scope，但是時常會出現一些情形，會意外地使得變數污染到全域。123456789for(var i = 0; i &lt; 10; i++) &#123;  console.log(i);&#125;console.log(i); /..
             </p>
         </div>
     </a>
@@ -401,8 +422,7 @@ Reducer(描述state會如何變化)此函式，接收”發送的action”｀”
         
         <div class="post-content-preview">
             <p>
-                react-router現在所有的mixins都已經deprecated都不建議使用，下面以一個submit事件為例
-1234567var ChildComponent = react.createClass(&#123;  mixins: [Router.history];  handleSu..
+                react-router現在所有的mixins都已經deprecated都不建議使用，下面以一個submit事件為例1234567var ChildComponent = react.createClass(&#123;  mixins: [Router.history];  handleSub..
             </p>
         </div>
     </a>
@@ -425,12 +445,10 @@ Reducer(描述state會如何變化)此函式，接收”發送的action”｀”
         
         <div class="post-content-preview">
             <p>
-                內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。
-這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。
-first-class object
-在JS中函式是first-class object，什麼是first-class object？
+                內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。
+first-class object在JS中函式是first-class object，什麼是first-class object？
 
-可透過字面..
+可透過字面值(..
             </p>
         </div>
     </a>
@@ -477,9 +495,9 @@ first-class object
         
         <div class="post-content-preview">
             <p>
-                一開始什麼都還不知道的時候，是先把檔案傳到github上，再從ec2裡clone到遠端主機那裡。這方法非常的麻煩，因為需不停的git push --&gt; git pull --&gt; git push ...，之後才知道有其他方法可以用...
+                一開始什麼都還不知道的時候，是先把檔案傳到github上，再從ec2裡clone到遠端主機那裡。這方法非常的麻煩，因為需不停的git push –&gt; git pull –&gt; git push …，之後才知道有其他方法可以用…
 
-不過在此之前，先讓連線到ec2上的方法更簡單..
+不過在此之前，先讓連線到ec2上的方法更簡單一點。連線到..
             </p>
         </div>
     </a>
@@ -502,37 +520,7 @@ first-class object
         
         <div class="post-content-preview">
             <p>
-                這幾天重新認識了JS中物件導向的一些概念，尤其是prototype這塊的概念。
-在ES6中加入了class但並不代表JS就有了類別，他只是個語法糖背後還是prototype-based，而且使用class背後其實還會有一些隱憂存在著，若一開始就直接使用class其實會對JS有一些錯誤的認知(我就..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/blog/2016/01/20/javascript常見誤區/">
-        <h2 class="post-title">
-            Javascript常見誤區
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-01-20
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                有些javascript的語言特性是一些初學課程不會提到的，而很有可能在之後的程式中就因此發生了bug而不自知，這裡就幾個部分來精簡說明
-
-Pass by What
-Equality
-Function Scope
-Hoisting
-This這裡都講得滿粗淺的，目的是要快速瞭解大概，因此講的不嚴謹..
+                這幾天重新認識了JS中物件導向的一些概念，尤其是prototype這塊的概念。在ES6中加入了class但並不代表JS就有了類別，他只是個語法糖背後還是prototype-based，而且使用class背後其實還會有一些隱憂存在著，若一開始就直接使用class其實會對JS有一些錯誤的認知(我就是..
             </p>
         </div>
     </a>
@@ -634,23 +622,6 @@ This這裡都講得滿粗淺的，目的是要快速瞭解大概，因此講的�
                     
                     
                     
-                    
-                    
-                    <a href="/blog/tags/#javascript" title="javascript"
-                       rel="8">javascript</a>
-                    
-                    
-                    
-                    <a href="/blog/tags/#react" title="react"
-                       rel="4">react</a>
-                    
-                    
-                    
-                    <a href="/blog/tags/#redux" title="redux"
-                       rel="4">redux</a>
-                    
-                    
-                    
                     <a href="/blog/tags/#linux" title="linux"
                        rel="2">linux</a>
                     
@@ -663,6 +634,23 @@ This這裡都講得滿粗淺的，目的是要快速瞭解大概，因此講的�
                     
                     <a href="/blog/tags/#ec2" title="ec2"
                        rel="2">ec2</a>
+                    
+                    
+                    
+                    <a href="/blog/tags/#javascript" title="javascript"
+                       rel="8">javascript</a>
+                    
+                    
+                    
+                    
+                    
+                    <a href="/blog/tags/#react" title="react"
+                       rel="5">react</a>
+                    
+                    
+                    
+                    <a href="/blog/tags/#redux" title="redux"
+                       rel="4">redux</a>
                     
                     
                     
