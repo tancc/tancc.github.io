@@ -22,7 +22,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://yinting-tan.com/archives/2016/07/">
+    <link rel="canonical" href="https://yinting-tan.com/archives/2016/07/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -32,6 +32,13 @@
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- direct to https -->
+    <script type="text/javascript">
+        var host = "yoursite.com";
+        if ((host == window.location.host) && (window.location.protocol != "https:"))
+            window.location.protocol = "https";
+    </script>
 </head>
 
 <style>
@@ -467,7 +474,7 @@ total / partial functionpartial function: 當函式，不能對應其所定義�
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://yinting-tan.com/js/jquery.tagcloud.js",function(){
+        async("https://yinting-tan.com/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
