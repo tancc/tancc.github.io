@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="寫！都寫！隨便寫！">
+    <meta name="keyword" content="blog javascript web programming">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="Tan" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        使用react-router-dom｜Tan&#39;s Note
+        
+    </title>
+
+    <link rel="canonical" href="https://yinting-tan.com/2017/03/29/intro-react-router-dom/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- direct to https -->
+    <script type="text/javascript">
+        var host = "yinting-tan.com";
+        if ((host == window.location.host) && (window.location.protocol != "https:"))
+            window.location.protocol = "https";
+    </script>
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('//o7bkkhiex.bkt.clouddn.com/lion-blur-bg.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Tan
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/archives/">archives</a>
+                        </li>
+							
+						
+                    
+                        
+							
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="https://unsplash.it/600/300/?random">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('https://unsplash.it/600/300/?random')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>使用react-router-dom</h1>
+                    
+                    <span class="meta">
+                         作者 Tan
+                        <span>
+                          日期 2017-03-29
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#react"
+                           title="react">react</a>
+                        
+                        <a class="tag" href="/tags/#react-router"
+                           title="react-router">react-router</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            使用react-router-dom
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>只記錄比較常用到的，詳細的內容可以參照<a href="https://reacttraining.com/react-router/" target="_blank" rel="external">官方文件</a></p>
+<h1 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h1><p><code>npm install react-router-dom@next -S</code><br>or<br><code>yarn add react-router-dom@next</code> </p>
+<h1 id="介紹到的API"><a href="#介紹到的API" class="headerlink" title="介紹到的ＡＰＩ"></a>介紹到的ＡＰＩ</h1><p>這篇沒有講到所有的API，只是大略簡單記錄一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import &#123;</span><br><span class="line">    BrowserRouter,</span><br><span class="line">    Route,</span><br><span class="line">    Link,</span><br><span class="line">    NavLink,</span><br><span class="line">    Switch,</span><br><span class="line">    Redirect,</span><br><span class="line">    Prompt,</span><br><span class="line">    StaticRouter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="lt-Router-gt"><a href="#lt-Router-gt" class="headerlink" title="&lt; Router &gt;"></a><code>&lt; Router &gt;</code></h1><p>V4版以前，都會在最外層用<code>&lt;Router&gt;...&lt;/Router&gt;</code>將內部的<code>&lt;Route /&gt;</code>包裹起來</p>
+<p>在新版中會通常會以<a href="https://reacttraining.com/react-router/web/api/BrowserRouter" target="_blank" rel="external"><code>&lt;BrowserRouter&gt;</code></a>來代替<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;BrowserRouter&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;Route exact path=&quot;/&quot; component=&#123;Home&#125;/&gt;</span><br><span class="line">      &lt;Route path=&quot;/archive&quot; component=&#123;Archive&#125;/&gt;</span><br><span class="line">      &lt;Route path=&quot;/about&quot; component=&#123;About&#125;/&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/BrowserRouter&gt;</span><br></pre></td></tr></table></figure></p>
+<p>此外還有其他許多<code>Router</code>，可以參照官方文件…</p>
+<h1 id="lt-Route-gt"><a href="#lt-Route-gt" class="headerlink" title="&lt; Route &gt;"></a><code>&lt; Route &gt;</code></h1><p><code>&lt;Route&gt;</code>完全就只是個component，他根據props來判斷要不要render出對應的component。</p>
+<p>因為他是個component，所以可以做各式各樣的組裝。</p>
+<p>這裡介紹他所使用的一些props：</p>
+<ul>
+<li><code>path</code>的規則更活了</li>
+</ul>
+<p>支援更多的正則表達式，以下是部份範例。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// match</span><br><span class="line">// X http://localhost:8000/</span><br><span class="line">// O http://localhost:8000/about</span><br><span class="line">// O http://localhost:8000/users/123</span><br><span class="line">&lt;Route path=&quot;/:about&quot; component=&#123;...&#125;/&gt;</span><br><span class="line"></span><br><span class="line">// 加上&apos;?&apos; 參數即變為可選項目</span><br><span class="line">// O http://localhost:8000/</span><br><span class="line">&lt;Route path=&quot;/:about?&quot; component=&#123;...&#125;/&gt;</span><br><span class="line"></span><br><span class="line">// X http://localhost:8000/12</span><br><span class="line">// O http://localhost:8000/123</span><br><span class="line">&lt;Route path=&quot;/:id(\d&#123;3&#125;)&quot; component=&#123;...&#125;/&gt;</span><br><span class="line"></span><br><span class="line">// X http://localhost:8000/about</span><br><span class="line">// O http://localhost:8000/user</span><br><span class="line">&lt;Route path=&quot;/:id([a-z]&#123;4&#125;)&quot; component=&#123;...&#125;/&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>exact</code></li>
+</ul>
+<p>只有當url與path完整match條件才成立<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// O http://localhost:8000/</span><br><span class="line">// X http://localhost:8000/about</span><br><span class="line">&lt;Route exact path=&quot;/&quot; component=&#123;...&#125;/&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>三種render methods(<code>component</code>, <code>render</code>, <code>children</code>)</li>
+</ul>
+<p>component要傳入的是React component，而後兩者則是function</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 在畫面上的結果會是一樣的</span><br><span class="line">const Users = () =&gt; &lt;h1&gt;Users Page&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">&lt;Route path=&quot;/users&quot; component=&#123;...&#125;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;Route path=&quot;/users&quot; render=&#123;() =&gt; &lt;h1&gt;Users Page&lt;/h1&gt;&#125;/&gt;</span><br><span class="line"></span><br><span class="line">&lt;Route path=&quot;/users&quot; children=&#123;() =&gt; &lt;h1&gt;Users Page&lt;/h1&gt;&#125;/&gt;</span><br></pre></td></tr></table></figure>
+<p>要注意的是當path相同時優先順序為<code>component</code> &gt; <code>render</code> &gt; <code>Children</code></p>
+<p>其中用<code>children</code>的話，不管path有沒有match他都會render</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 在path沒有mathc的情境下</span><br><span class="line">&lt;Route path=&quot;/users&quot; children=&#123;() =&gt; &lt;h1&gt;Users Page&lt;/h1&gt;&#125;/&gt;</span><br><span class="line">// 等同於</span><br><span class="line">// &lt;Route children=&#123;(&#123;match&#125;) =&gt; &lt;h1&gt;Users Page&lt;/h1&gt;&#125;/&gt;</span><br><span class="line">// 且Route幫我們自動傳入的其中一個props &apos;match&apos;會為 null</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>&lt;Route&gt;</code>會自動傳入的props有<code>history</code>, <code>location</code>, <code>match</code></li>
+</ul>
+<h1 id="lt-Link-gt"><a href="#lt-Link-gt" class="headerlink" title="&lt; Link &gt;"></a><code>&lt; Link &gt;</code></h1><ul>
+<li><p><code>to</code>傳入物件(舊版本就有了)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Link to=&quot;/?page=2&quot;/&gt;</span><br><span class="line">// 等同於</span><br><span class="line">&lt;Link to=&#123;&#123;pathname: &apos;/&apos;, search=&apos;page=2&apos;&#125;&#125;&gt;</span><br><span class="line"></span><br><span class="line">// 官網範例</span><br><span class="line">// &lt;Link to=&#123;&#123;</span><br><span class="line">//   pathname: &apos;/courses&apos;,</span><br><span class="line">//   search: &apos;?sort=name&apos;,</span><br><span class="line">//   hash: &apos;#the-hash&apos;,</span><br><span class="line">//   state: &#123; fromDashboard: true &#125;</span><br><span class="line">// &#125;&#125;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>replace</code></p>
+</li>
+</ul>
+<p>傳入這個prop，會覆蓋history而不是新增history進去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// history stack: [&apos;/&apos;, &apos;/about&apos;]</span><br><span class="line">// 當前頁面在&apos;/about&apos;頁</span><br><span class="line"></span><br><span class="line">&lt;Link to=&apos;users&apos; replace&gt;</span><br><span class="line"></span><br><span class="line">// 點選後</span><br><span class="line">// history stack: [&apos;/&apos;, &apos;/users&apos;]</span><br><span class="line">// 也就是按上一頁會回到&apos;/&apos;而不是&apos;/about&apos;</span><br></pre></td></tr></table></figure>
+<h1 id="lt-NavLink-gt"><a href="#lt-NavLink-gt" class="headerlink" title="&lt; NavLink &gt;"></a><code>&lt; NavLink &gt;</code></h1><p>其實就是<code>&lt;Link&gt;</code>的加強版，主要是用在當前如果這個link是active的話，我們可以幫他增加一些樣式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 使用class的方式</span><br><span class="line">&lt;NavLink</span><br><span class="line">  to=&quot;/about&quot;</span><br><span class="line">  activeClassName=&quot;active&quot;&gt;</span><br><span class="line">  About</span><br><span class="line">&lt;/NavLink&gt;</span><br><span class="line"></span><br><span class="line">// 使用inline的方式</span><br><span class="line">&lt;NavLink</span><br><span class="line">  to=&quot;/about&quot;</span><br><span class="line">  activeStyle=&#123;&#123;</span><br><span class="line">    fontWeight: &apos;bold&apos;,</span><br><span class="line">    color: &apos;red&apos;</span><br><span class="line">   &#125;&#125;&gt;</span><br><span class="line">  About</span><br><span class="line">&lt;/NavLink&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="lt-Switch-gt"><a href="#lt-Switch-gt" class="headerlink" title="&lt; Switch &gt;"></a><code>&lt; Switch &gt;</code></h1><p>讓只有第一個match到location的Route才會render出component</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 在http://localhost:8000/about時</span><br><span class="line">// 若沒有使用&lt;Switch&gt;...&lt;/Switch&gt;去包裹，第3,4,5個Router都會render</span><br><span class="line">// 使用後，只有 &lt;Route path=&quot;/about&quot;&gt; 這一條會render</span><br><span class="line">&lt;BrowserRouter&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;Switch&gt;</span><br><span class="line">      &lt;Route exact path=&quot;/&quot; component=&#123;Home&#125;/&gt;</span><br><span class="line">      &lt;Route path=&quot;/archive&quot; component=&#123;Archive&#125;/&gt;</span><br><span class="line">      &lt;Route path=&quot;/about&quot; component=&#123;About&#125;/&gt;</span><br><span class="line">      &lt;Route path=&quot;/:users&quot; component=&#123;Users&#125;/&gt;</span><br><span class="line">      &lt;Route component=&#123;NotFound&#125;/&gt;</span><br><span class="line">    &lt;/Switch&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/BrowserRouter&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="lt-Redirect-gt"><a href="#lt-Redirect-gt" class="headerlink" title="&lt; Redirect &gt;"></a><code>&lt; Redirect &gt;</code></h1><p>顧名思義就是用來轉頁用的，而預設是會override當前在history stack的位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// match到from時就導向to</span><br><span class="line">&lt;Redirect from=&apos;/old&apos; to=&apos;/new&apos;/&gt;</span><br><span class="line"></span><br><span class="line">// 不override</span><br><span class="line">&lt;Redirect push from=&apos;/old&apos; to=&apos;/new&apos;/&gt;</span><br><span class="line"></span><br><span class="line">// 更常會這樣做</span><br><span class="line">&lt;Route path=&quot;/old&quot; render=&#123;() =&gt; (</span><br><span class="line">  &lt;Redirect to=&apos;/new&apos;/&gt;</span><br><span class="line">)&#125;/&gt;</span><br><span class="line"></span><br><span class="line">// 這樣做的好處是我們可以先對傳來的match, location等等做額外的處理</span><br><span class="line">&lt;Route path=&quot;/old/:id&quot; render=&#123;(&#123;match&#125;) =&gt; (</span><br><span class="line">  &lt;Redirect to=&#123;`/new/$&#123;match.params.id&#125;`&#125;/&gt;</span><br><span class="line">)&#125;/&gt;</span><br><span class="line"></span><br><span class="line">// 除此之外to也可以傳入</span><br><span class="line">&lt;Redirect to=&#123;&#123;</span><br><span class="line">  pathname: &apos;/login&apos;,</span><br><span class="line">  search: &apos;?utm=your+face&apos;,</span><br><span class="line">  state: &#123; referrer: currentLocation &#125;</span><br><span class="line">&#125;&#125;/&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="lt-Prompt-gt"><a href="#lt-Prompt-gt" class="headerlink" title="&lt; Prompt &gt;"></a><code>&lt; Prompt &gt;</code></h1><p>當user要轉到其他頁面時可以用來跳出提醒，這在有表單的頁面是很常用到的功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">handleInput = () =&gt; this.setState(&#123;changed: true&#125;)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">&lt;input type=&quot;text&quot; onInput=&#123;this.handleInput&#125;&gt;</span><br><span class="line">&lt;Prompt</span><br><span class="line">    when=&#123;this.state.changed&#125;</span><br><span class="line">    message=“離開此頁面所填寫的資料將會消失！”&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="lt-StaticRouter-gt"><a href="#lt-StaticRouter-gt" class="headerlink" title="&lt; StaticRouter &gt;"></a><code>&lt; StaticRouter &gt;</code></h1><p>這個主要是server-side rendering時用到的，有時在test的時候也會使用到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// location為要render的location</span><br><span class="line">const appHtml = ReactDOMServer.renderToString(</span><br><span class="line">  &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">    &lt;StaticRouter </span><br><span class="line">      location=&#123;req.url&#125;</span><br><span class="line">      context=&#123;routerContext&#125;&gt;</span><br><span class="line">        &lt;App /&gt;</span><br><span class="line">    &lt;/StaticRouter&gt;</span><br><span class="line">  &lt;/Provider&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/03/21/react-development-environment-setup/" data-toggle="tooltip" data-placement="top"
+                           title="React 開發環境建置">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安裝"><span class="toc-text">安裝</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#介紹到的API"><span class="toc-text">介紹到的ＡＰＩ</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lt-Router-gt"><span class="toc-text">< Router ></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lt-Route-gt"><span class="toc-text">< Route ></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lt-Link-gt"><span class="toc-text">< Link ></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lt-NavLink-gt"><span class="toc-text">< NavLink ></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lt-Switch-gt"><span class="toc-text">< Switch ></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lt-Redirect-gt"><span class="toc-text">< Redirect ></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lt-Prompt-gt"><span class="toc-text">< Prompt ></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#lt-StaticRouter-gt"><span class="toc-text">< StaticRouter ></span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#react"
+                           title="react">react</a>
+                        
+                        <a class="tag" href="/tags/#react-router"
+                           title="react-router">react-router</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/RyanTan.YT">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/tancc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/yin-ting-tan-172184b5">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Tan 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://yinting-tan.com/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','undefined','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!-- ga -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-96121055-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!--wechat title img-->
+<img class="wechat-title-img" src="https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10003519_623356174385513_1929844211_n.jpg?oh=cfb625a8fa42f1ba846175a29b200ed6&amp;oe=59366A76">
+</body>
+
+</html>

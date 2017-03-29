@@ -100,7 +100,17 @@
 							
 						
                     
+                        
+							
+								
+							
+						
+                    
 					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
 					
                 </ul>
             </div>
@@ -191,7 +201,9 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h1 id="1-設置swap"><a href="#1-設置swap" class="headerlink" title="1:設置swap"></a>1:設置swap</h1><p>有時執行某些程序時可能會有記憶體不夠的情形，這時可將一部分空間拿來當作虛擬記憶體來解決這問題<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 設置swap檔的所在位置</span><br><span class="line">SWAP=/tmp/swap</span><br><span class="line"></span><br><span class="line">//建立swap檔。</span><br><span class="line">// /dev/zero代表空的檔案</span><br><span class="line">// of後接的為swap檔要放置的位置</span><br><span class="line">// bs為block-size即設置單位儲存區塊大小</span><br><span class="line">// count 為設置swap檔的大小要為多少bs</span><br><span class="line">dd <span class="keyword">if</span>=/dev/zero of=<span class="variable">$SWAP</span> bs=1M count=500 //配置500M</span><br><span class="line"></span><br><span class="line">// 將 <span class="variable">$SWAP</span> 此檔設為swap檔案型態，並啟動</span><br><span class="line">mkswap <span class="variable">$SWAP</span></span><br><span class="line">sudo swapon <span class="variable">$SWAP</span></span><br><span class="line"></span><br><span class="line">// 停止swap，並刪除swap檔案</span><br><span class="line">sudo swapoff <span class="variable">$SWAP</span></span><br><span class="line">rm /tmp/swap</span><br></pre></td></tr></table></figure></p>
+                <h1>1:設置swap</h1>
+<p>有時執行某些程序時可能會有記憶體不夠的情形，這時可將一部分空間拿來當作虛擬記憶體來解決這問題
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 設置swap檔的所在位置</span><br><span class="line">SWAP=/tmp/swap</span><br><span class="line"></span><br><span class="line">//建立swap檔。</span><br><span class="line">// /dev/zero代表空的檔案</span><br><span class="line">// of後接的為swap檔要放置的位置</span><br><span class="line">// bs為block-size即設置單位儲存區塊大小</span><br><span class="line">// count 為設置swap檔的大小要為多少bs</span><br><span class="line">dd <span class="keyword">if</span>=/dev/zero of=<span class="variable">$SWAP</span> bs=1M count=500 //配置500M</span><br><span class="line"></span><br><span class="line">// 將 <span class="variable">$SWAP</span> 此檔設為swap檔案型態，並啟動</span><br><span class="line">mkswap <span class="variable">$SWAP</span></span><br><span class="line">sudo swapon <span class="variable">$SWAP</span></span><br><span class="line"></span><br><span class="line">// 停止swap，並刪除swap檔案</span><br><span class="line">sudo swapoff <span class="variable">$SWAP</span></span><br><span class="line">rm /tmp/swap</span><br></pre></td></tr></table></figure></p>
 
                 <hr>
                 
@@ -219,7 +231,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-設置swap"><span class="toc-text">1:設置swap</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-text">1:設置swap</span></a></li></ol>
                 </div>
             </div>
         </div>
