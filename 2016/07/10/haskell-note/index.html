@@ -94,15 +94,15 @@
                     
                         
 							
-								
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
 							
 						
                     
                         
 							
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
+								
 							
 						
                     
@@ -201,19 +201,12 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>學習資源
-<a href="http://www.seas.upenn.edu/~cis194/lectures.html" target="_blank" rel="external">CIS 194</a>
-<a href="http://learnyoua.haskell.sg/content/zh-tw/" target="_blank" rel="external">Learn you a haskell</a>
-&lt;hr /&gt;</p>
-<h2>total / partial function</h2>
-<p>partial function: 當函式，不能對應其所定義的型別參數的所有可能性，稱之partial function。如：<code>head tail div (!!)</code>
-total function: 反之則稱為total function</p>
-<h2>(.) operator</h2>
-<p>用來組合函式用的
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(.) :: (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c</span><br><span class="line">(.) f g x = f (g x)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 將list中的數值先加一再乘四</span></span><br><span class="line"><span class="title">add1Mul4</span> :: [<span class="type">Int</span>] -&gt; [<span class="type">Int</span>]</span><br><span class="line"><span class="title">add1Mul4</span> x = map ((*<span class="number">4</span>) . (+<span class="number">1</span>)) x</span><br></pre></td></tr></table></figure></p>
-<h2>($) operator</h2>
-<p>用來代替<code>()</code>
-<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">($) :: (a -&gt; b) -&gt; a -&gt; b</span><br><span class="line"><span class="title">f</span> $ x = f x</span><br><span class="line"></span><br><span class="line"><span class="comment">--將list中為偶數的數量變為負數</span></span><br><span class="line"><span class="title">negateNumEvens1</span> :: [<span class="type">Int</span>] -&gt; <span class="type">Int</span></span><br><span class="line"><span class="title">negateNumEvens1</span> x = negate (length (filter even x))</span><br><span class="line"><span class="comment">-- 等同於</span></span><br><span class="line"><span class="title">negateNumEvens1</span> x = negate $ length $ filter even x</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line"><span class="meta">## Lambda</span></span><br><span class="line">也就是匿名函式(anonymous function) 或稱lambda expression</span><br><span class="line">```haskell</span><br><span class="line"><span class="comment">-- 將list中的數值都加二</span></span><br><span class="line"><span class="title">addTwo</span> = map (\x -&gt; x + <span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+                <p>學習資源<br><a href="http://www.seas.upenn.edu/~cis194/lectures.html" target="_blank" rel="external">CIS 194</a><br><a href="http://learnyoua.haskell.sg/content/zh-tw/" target="_blank" rel="external">Learn you a haskell</a></p>
+<hr>
+
+<h2 id="total-partial-function"><a href="#total-partial-function" class="headerlink" title="total / partial function"></a>total / partial function</h2><p>partial function: 當函式，不能對應其所定義的型別參數的所有可能性，稱之partial function。如：<code>head tail div (!!)</code><br>total function: 反之則稱為total function</p>
+<h2 id="operator"><a href="#operator" class="headerlink" title="(.) operator"></a>(.) operator</h2><p>用來組合函式用的<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(.) :: (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c</span><br><span class="line">(.) f g x = f (g x)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 將list中的數值先加一再乘四</span></span><br><span class="line"><span class="title">add1Mul4</span> :: [<span class="type">Int</span>] -&gt; [<span class="type">Int</span>]</span><br><span class="line"><span class="title">add1Mul4</span> x = map ((*<span class="number">4</span>) . (+<span class="number">1</span>)) x</span><br></pre></td></tr></table></figure></p>
+<h2 id="operator-1"><a href="#operator-1" class="headerlink" title="($) operator"></a>($) operator</h2><p>用來代替<code>()</code><br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">($) :: (a -&gt; b) -&gt; a -&gt; b</span><br><span class="line"><span class="title">f</span> $ x = f x</span><br><span class="line"></span><br><span class="line"><span class="comment">--將list中為偶數的數量變為負數</span></span><br><span class="line"><span class="title">negateNumEvens1</span> :: [<span class="type">Int</span>] -&gt; <span class="type">Int</span></span><br><span class="line"><span class="title">negateNumEvens1</span> x = negate (length (filter even x))</span><br><span class="line"><span class="comment">-- 等同於</span></span><br><span class="line"><span class="title">negateNumEvens1</span> x = negate $ length $ filter even x</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line"><span class="meta">## Lambda</span></span><br><span class="line">也就是匿名函式(anonymous function) 或稱lambda expression</span><br><span class="line">```haskell</span><br><span class="line"><span class="comment">-- 將list中的數值都加二</span></span><br><span class="line"><span class="title">addTwo</span> = map (\x -&gt; x + <span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
 <p><code>\</code>在Haskell中是來表示λ用的</p>
 
                 <hr>
@@ -242,7 +235,7 @@ total function: 反之則稱為total function</p>
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">total / partial function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">(.) operator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-text">($) operator</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#total-partial-function"><span class="toc-text">total / partial function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#operator"><span class="toc-text">(.) operator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#operator-1"><span class="toc-text">($) operator</span></a></li></ol>
                 </div>
             </div>
         </div>

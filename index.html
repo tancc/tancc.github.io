@@ -94,15 +94,15 @@
                     
                         
 							
-								
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
 							
 						
                     
                         
 							
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
+								
 							
 						
                     
@@ -285,7 +285,7 @@
                         <!--移动端头部显示-->
                         <img src="https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10003519_623356174385513_1929844211_n.jpg?oh=cfb625a8fa42f1ba846175a29b200ed6&amp;oe=59366A76"/>
                         <h5><a href="/about/">Tan</a></h5>
-                        <p>喜歡JS的前端</p>
+                        <p>Fronted Engineer</p>
                     </div>
                 </div>
             </div>
@@ -303,6 +303,40 @@
 
 <div class="post-preview "
      style="background-image: url('')">
+    <a href="/2017/05/14/intro-graphql/">
+        <h2 class="post-title">
+            GraphQL簡簡簡介
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-05-14
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                要解決的問題
+舉幾個如：
+
+不同app對資料的需求不同，後端要開許多api或是要做許多的客制
+client端取得資料時，須發多個request到一個或者多個資料庫
+
+是什麼
+
+GraphQL Introduction
+query language for API
+
+GraphQL 中的q..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('')">
     <a href="/2017/03/29/intro-react-router-dom/">
         <h2 class="post-title">
             使用react-router-dom
@@ -314,13 +348,9 @@
         <div class="post-content-preview">
             <p>
                 只記錄比較常用到的，詳細的內容可以參照官方文件
-安裝
-npm install react-router-dom@next -S
-or
-yarn add react-router-dom@next
-介紹到的API
-這篇沒有講到所有的API，只是大略簡單記錄一下
-12345678910import ..
+安裝npm install react-router-dom@next -Soryarn add react-router-dom@next 
+介紹到的API這篇沒有講到所有的API，只是大略簡單記錄一下
+12345678910import &#1..
             </p>
         </div>
     </a>
@@ -346,9 +376,7 @@ yarn add react-router-dom@next
                 現在有很方便的工具可以使用了create-react-app
 但難免還是會需要一些客製化的設定，除此之外自己做一個模板也能更瞭解什麼東西在幹什麼，所以最後還是決定自己動手弄囉
 完成結果的程式在這
-基本雛型
-檔案結構
-12345678910- src  index.js---- component..
+基本雛型檔案結構12345678910- src  index.js---- components ..
             </p>
         </div>
     </a>
@@ -373,23 +401,19 @@ yarn add react-router-dom@next
             <p>
                 跟一般測試其實沒有什麼大不同
 
-
 先把規格盤點出來
 
-
 由淺到深寫測試，亮紅燈
-
 
 再來寫component/action/reducer來亮綠燈
 
 
 
-使用工具
-Jest
+使用工具Jest
 Enzyme
-目前看起來就是這兩者為主流，目前也還在學習中...
+目前看起來就是這兩者為主流，目前也還在學習中…
 一些參考資料
-Testing JavaScript wi..
+Testing JavaScript with Jes..
             </p>
         </div>
     </a>
@@ -417,8 +441,7 @@ Testing JavaScript wi..
 我第一個實作就也打算從219開始了，之後會不定期更新。
 Gihub Repo
 219. Contains Duplicate II
-
-G..
+Gi..
             </p>
         </div>
     </a>
@@ -441,11 +464,12 @@ G..
         
         <div class="post-content-preview">
             <p>
-                說來慚愧，一直都有聽過這專有名詞，但沒有好好去瞭解過，真是太不專業了...
+                說來慚愧，一直都有聽過這專有名詞，但沒有好好去瞭解過，真是太不專業了…
 最近剛好要為自己好好打底，就趁這個機會來記錄一下CSRF吧！
-&lt;hr/&gt;
-白話的CSRF
-CSRF(Cross-Site Request Forgery，跨站點偽造請求)，簡單的說就是在使用者不知情的情況下，..
+
+
+白話的CSRFCSRF(Cross-Site Request Forgery，跨站點偽造請求)，簡單的說就是在使用者不知情的情況下，冒用身份去發出請求。
+也就..
             </p>
         </div>
     </a>
@@ -469,15 +493,10 @@ CSRF(Cross-Site Request Forgery，跨站點偽造請求)，簡單的說就是在
         <div class="post-content-preview">
             <p>
                 紀錄store的規劃，以及非同步請求的actions與reducers的設計思路(使用redux-thunk)
-&lt;hr /&gt;
+
 Store
-
-
-根據主要domain來存放
-
-
-這裡的domain指的是在APP裡不同主題的頁面、使用者資訊、設定等等主要的場域。
-12345678910&#..
+根據主要domain來存放這裡的domain指的是在APP裡不同主題的頁面、使用者資訊、設定等等主要的場域。
+12345678910&#123;  channel: &#..
             </p>
         </div>
     </a>
@@ -500,10 +519,7 @@ Store
         
         <div class="post-content-preview">
             <p>
-                JSON.stringify
-會將傳進去的第一個參數，序列化為字串
-除了undefined、function、symbol
-123JSON.stringify(undefined) // undefinedJSON.stringify(()=&gt;&#123;&#125;)) // undef..
+                JSON.stringify會將傳進去的第一個參數，序列化為字串除了undefined、function、symbol123JSON.stringify(undefined) // undefinedJSON.stringify(()=&gt;&#123;&#125;)) // undefine..
             </p>
         </div>
     </a>
@@ -527,9 +543,8 @@ Store
         <div class="post-content-preview">
             <p>
                 css一直是我的痛嘖嘖，這裡就記錄一下這種種選擇器的用法
-&gt; 選擇器
-又稱為child selector，這個選擇器會選擇容器子層的元素(不含巢狀內層)
-123456789101112&lt;div class="outer"&gt;  &lt;p&gt;one&lt;/p&gt;  &l..
+&gt; 選擇器又稱為child selector，這個選擇器會選擇容器子層的元素(不含巢狀內層)
+123456789101112&lt;div class="outer"&gt;  &lt;p&gt;one&lt;/p&gt;  &lt..
             </p>
         </div>
     </a>
@@ -555,32 +570,6 @@ Store
                 整理在專案開發時、在網路看文章時覺得不錯的實踐，不敢說最佳(best)只敢用較好(better)XD。
 
 使用Destructuring assignment一般我的們component常常會有這種寫法12345678910111213render() &#123;  return    &lt..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/2016/09/03/get-started-ava/">
-        <h2 class="post-title">
-            初探AVA
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-09-03
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                javascript有許多測試框架，較出名的如Mocha、Jasmine等等。
-近年比較廣受好評的則是這篇要介紹的AVA
-AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。
-此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promi..
             </p>
         </div>
     </a>
@@ -623,7 +612,7 @@ AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併�
                     
                     <h5><a href="/about/">Tan</a></h5>
                     
-                    <p>喜歡JS的前端</p>
+                    <p>Fronted Engineer</p>
                     
                     <hr>
                     <!-- SNS Link 社交 -->
@@ -676,6 +665,25 @@ AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併�
                 <div class="tags">
                     
                     
+                    
+                    
+                    <a href="/tags/#javascript" title="javascript"
+                       rel="8">javascript</a>
+                    
+                    
+                    
+                    <a href="/tags/#react" title="react"
+                       rel="6">react</a>
+                    
+                    
+                    
+                    <a href="/tags/#redux" title="redux"
+                       rel="4">redux</a>
+                    
+                    
+                    
+                    
+                    
                     <a href="/tags/#linux" title="linux"
                        rel="2">linux</a>
                     
@@ -690,23 +698,6 @@ AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併�
                        rel="2">ec2</a>
                     
                     
-                    
-                    
-                    
-                    <a href="/tags/#javascript" title="javascript"
-                       rel="8">javascript</a>
-                    
-                    
-                    
-                    
-                    
-                    <a href="/tags/#react" title="react"
-                       rel="6">react</a>
-                    
-                    
-                    
-                    <a href="/tags/#redux" title="redux"
-                       rel="4">redux</a>
                     
                     
                     

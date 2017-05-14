@@ -94,15 +94,15 @@
                     
                         
 							
-								
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
 							
 						
                     
                         
 							
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
+								
 							
 						
                     
@@ -285,7 +285,7 @@
                         <!--移动端头部显示-->
                         <img src="https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10003519_623356174385513_1929844211_n.jpg?oh=cfb625a8fa42f1ba846175a29b200ed6&amp;oe=59366A76"/>
                         <h5><a href="/about/">Tan</a></h5>
-                        <p>喜歡JS的前端</p>
+                        <p>Fronted Engineer</p>
                     </div>
                 </div>
             </div>
@@ -303,6 +303,31 @@
 
 <div class="post-preview "
      style="background-image: url('')">
+    <a href="/2016/01/26/ec2同步本地端檔案/">
+        <h2 class="post-title">
+            ec2同步本地端檔案
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-01-26
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                一開始什麼都還不知道的時候，是先把檔案傳到github上，再從ec2裡clone到遠端主機那裡。這方法非常的麻煩，因為需不停的git push –&gt; git pull –&gt; git push …，之後才知道有其他方法可以用…
+
+不過在此之前，先讓連線到ec2上的方法更簡單一點。連線到..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('')">
     <a href="/2016/01/24/javascript-oo/">
         <h2 class="post-title">
             JS中的物件導向
@@ -313,8 +338,7 @@
         
         <div class="post-content-preview">
             <p>
-                這幾天重新認識了JS中物件導向的一些概念，尤其是prototype這塊的概念。
-在ES6中加入了class但並不代表JS就有了類別，他只是個語法糖背後還是prototype-based，而且使用class背後其實還會有一些隱憂存在著，若一開始就直接使用class其實會對JS有一些錯誤的認知(我就..
+                這幾天重新認識了JS中物件導向的一些概念，尤其是prototype這塊的概念。在ES6中加入了class但並不代表JS就有了類別，他只是個語法糖背後還是prototype-based，而且使用class背後其實還會有一些隱憂存在著，若一開始就直接使用class其實會對JS有一些錯誤的認知(我就是..
             </p>
         </div>
     </a>
@@ -337,26 +361,13 @@
         
         <div class="post-content-preview">
             <p>
-                有些javascript的語言特性是一些初學課程不會提到的，而很有可能在之後的程式中就因此發生了bug而不自知，
-這裡就幾個部分來精簡說明
-
+                有些javascript的語言特性是一些初學課程不會提到的，而很有可能在之後的程式中就因此發生了bug而不自知，這裡就幾個部分來精簡說明
 
 Pass by What
-
-
 Equality
-
-
 Function Scope
-
-
 Hoisting
-
-
-This
-
-
-這裡都講得滿粗淺的，目的是要快..
+This這裡都講得滿粗淺的，目的是要快速瞭解大概，因此講的不嚴謹..
             </p>
         </div>
     </a>
@@ -385,11 +396,8 @@ This
 常用的loader、pluggin
 好用的現成Boilerplate
 
-事前準備
-首先要先安裝webpack，這裡使用全域安裝來做示範
-npm i webpack -g //--save 也可使用
-&lt;!-- more --&gt;
-..
+事前準備首先要先安裝webpack，這裡使用全域安裝來做示範npm i webpack -g //--save 也可使用 
+檔案結構在這裡我使用的檔案結構如下/app..
             </p>
         </div>
     </a>
@@ -412,9 +420,7 @@ npm i webpack -g //--save 也可使用
         
         <div class="post-content-preview">
             <p>
-                1:設置swap
-有時執行某些程序時可能會有記憶體不夠的情形，這時可將一部分空間拿來當作虛擬記憶體來解決這問題
-1234567891011121314151617// 設置swap檔的所在位置SWAP=/tmp/swap//建立swap檔。// /dev/zero代表空的檔案// of後接的為s..
+                1:設置swap有時執行某些程序時可能會有記憶體不夠的情形，這時可將一部分空間拿來當作虛擬記憶體來解決這問題1234567891011121314151617// 設置swap檔的所在位置SWAP=/tmp/swap//建立swap檔。// /dev/zero代表空的檔案// of後接的為swa..
             </p>
         </div>
     </a>
@@ -437,10 +443,8 @@ npm i webpack -g //--save 也可使用
         
         <div class="post-content-preview">
             <p>
-                1: Install gcc, make and git
-123sudo yum install gcc-c++ makesudo yum install openssl-develsudo yum install git
-2: Install node
-12345git clone https..
+                1: Install gcc, make and git123sudo yum install gcc-c++ makesudo yum install openssl-develsudo yum install git
+2: Install node12345git clone https:/..
             </p>
         </div>
     </a>
@@ -483,7 +487,7 @@ npm i webpack -g //--save 也可使用
                     
                     <h5><a href="/about/">Tan</a></h5>
                     
-                    <p>喜歡JS的前端</p>
+                    <p>Fronted Engineer</p>
                     
                     <hr>
                     <!-- SNS Link 社交 -->
@@ -536,6 +540,25 @@ npm i webpack -g //--save 也可使用
                 <div class="tags">
                     
                     
+                    
+                    
+                    <a href="/tags/#javascript" title="javascript"
+                       rel="8">javascript</a>
+                    
+                    
+                    
+                    <a href="/tags/#react" title="react"
+                       rel="6">react</a>
+                    
+                    
+                    
+                    <a href="/tags/#redux" title="redux"
+                       rel="4">redux</a>
+                    
+                    
+                    
+                    
+                    
                     <a href="/tags/#linux" title="linux"
                        rel="2">linux</a>
                     
@@ -550,23 +573,6 @@ npm i webpack -g //--save 也可使用
                        rel="2">ec2</a>
                     
                     
-                    
-                    
-                    
-                    <a href="/tags/#javascript" title="javascript"
-                       rel="8">javascript</a>
-                    
-                    
-                    
-                    
-                    
-                    <a href="/tags/#react" title="react"
-                       rel="6">react</a>
-                    
-                    
-                    
-                    <a href="/tags/#redux" title="redux"
-                       rel="4">redux</a>
                     
                     
                     

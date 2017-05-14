@@ -94,15 +94,15 @@
                     
                         
 							
-								
+                        <li>
+                            <a href="/tags/">tags</a>
+                        </li>
 							
 						
                     
                         
 							
-                        <li>
-                            <a href="/tags/">tags</a>
-                        </li>
+								
 							
 						
                     
@@ -285,7 +285,7 @@
                         <!--移动端头部显示-->
                         <img src="https://scontent-tpe1-1.xx.fbcdn.net/v/t1.0-1/p160x160/10003519_623356174385513_1929844211_n.jpg?oh=cfb625a8fa42f1ba846175a29b200ed6&amp;oe=59366A76"/>
                         <h5><a href="/about/">Tan</a></h5>
-                        <p>喜歡JS的前端</p>
+                        <p>Fronted Engineer</p>
                     </div>
                 </div>
             </div>
@@ -303,6 +303,30 @@
 
 <div class="post-preview "
      style="background-image: url('')">
+    <a href="/2016/09/03/get-started-ava/">
+        <h2 class="post-title">
+            初探AVA
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-09-03
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                javascript有許多測試框架，較出名的如Mocha、Jasmine等等。近年比較廣受好評的則是這篇要介紹的AVA
+AVA最明顯的好處在於，利用了Node異步的特性，使測試可以併發執行，這對有許多IO的測試程式特別有幫助。此外AVA的語法特別簡單且內建斷言庫，支持es2015、Promise..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview "
+     style="background-image: url('')">
     <a href="/2016/08/05/javascript-design-pattern/">
         <h2 class="post-title">
             javascript設計模式與開發實踐 - 筆記
@@ -314,11 +338,8 @@
         <div class="post-content-preview">
             <p>
                 內容主要出自於“javascript設計模式與開發實踐”這本書，針對書內所介紹的設計模式部分做簡短的紀錄。
-&lt;hr/&gt;
-單例模式
-主要精神就是－保證一個類別只會有一個實例，並提供全域存取。
-放到JS中，也就是去確保某個物件只會被生成一次。
-實作上的關鍵在於，用一個變數去儲存單例，以這..
+
+單例模式主要精神就是－保證一個類別只會有一個實例，並提供全域存取。放到JS中，也就是去確保某個物件只會被生成一次。實作上的關鍵在於，用一個變數去儲存單例，以這個變數去判斷物件被生成過了沒..
             </p>
         </div>
     </a>
@@ -341,12 +362,9 @@
         
         <div class="post-content-preview">
             <p>
-                在開發時，時常會有需要發一個action，然後去向後端拿資料的動作。
-而這整個請求資料的行為是非同步的，因此在執行時還需要處理一些UI上的互動，如“載入中”、“發生錯誤”、“順利取得資料”。
-這篇文分使用的範例應用為，輸入一個group的名稱，然會取得其成員的列表
-
-範例可以在此取得
-這篇文章分..
+                在開發時，時常會有需要發一個action，然後去向後端拿資料的動作。而這整個請求資料的行為是非同步的，因此在執行時還需要處理一些UI上的互動，如“載入中”、“發生錯誤”、“順利取得資料”。
+這篇文分使用的範例應用為，輸入一個group的名稱，然會取得其成員的列表範例可以在此取得
+這篇文章分三部分..
             </p>
         </div>
     </a>
@@ -370,8 +388,9 @@
         <div class="post-content-preview">
             <p>
                 記錄在You Dont Know Javascript中看到的這個部分。這部分我認為是一般比較少接觸的地方，但其實也算是重要的，在滿多第三方套件其實都有用到這功能來實作。
-&lt;hr /&gt;
-特性描述器(Property Descriptors也稱作)Data Descriptors，因為..
+
+
+特性描述器(Property Descriptors也稱作)Data Descriptors，因為他們做用於存放一個值(..
             </p>
         </div>
     </a>
@@ -394,12 +413,10 @@
         
         <div class="post-content-preview">
             <p>
-                學習資源
-CIS 194
-Learn you a haskell
-&lt;hr /&gt;
-total / partial function
-partial function: 當函式，不能對應其所定義的型別參數的所有可能性，稱之partial function。如：head tail div ..
+                學習資源CIS 194Learn you a haskell
+
+
+total / partial functionpartial function: 當函式，不能對應其所定義的型別參數的所有可能性，稱之partial function。如：head tail div (!!)total func..
             </p>
         </div>
     </a>
@@ -423,10 +440,9 @@ partial function: 當函式，不能對應其所定義的型別參數的所有�
         <div class="post-content-preview">
             <p>
                 三大原則
-
 應用程式的所有狀態(state)，會被保存在一個Javascript的物件中
 在Redux中，state tree 是read-only。想要改變state唯有dispatch an action
-Reducer(描述state會如何變化)此函式，接收”發送的action”｀”前一個..
+Reducer(描述state會如何變化)此函式，接收”發送的action”｀”前一個狀..
             </p>
         </div>
     </a>
@@ -449,9 +465,7 @@ Reducer(描述state會如何變化)此函式，接收”發送的action”｀”
         
         <div class="post-content-preview">
             <p>
-                let &amp; const
-原本js都為function scope，但是時常會出現一些情形，會意外地使得變數污染到全域。
-123456789for(var i = 0; i &lt; 10; i++) &#123;  console.log(i);&#125;console.log(i);..
+                let &amp; const原本js都為function scope，但是時常會出現一些情形，會意外地使得變數污染到全域。123456789for(var i = 0; i &lt; 10; i++) &#123;  console.log(i);&#125;console.log(i); /..
             </p>
         </div>
     </a>
@@ -474,8 +488,7 @@ Reducer(描述state會如何變化)此函式，接收”發送的action”｀”
         
         <div class="post-content-preview">
             <p>
-                react-router現在所有的mixins都已經deprecated都不建議使用，下面以一個submit事件為例
-1234567var ChildComponent = react.createClass(&#123;  mixins: [Router.history];  handleSu..
+                react-router現在所有的mixins都已經deprecated都不建議使用，下面以一個submit事件為例1234567var ChildComponent = react.createClass(&#123;  mixins: [Router.history];  handleSub..
             </p>
         </div>
     </a>
@@ -498,12 +511,10 @@ Reducer(描述state會如何變化)此函式，接收”發送的action”｀”
         
         <div class="post-content-preview">
             <p>
-                內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。
-這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。
-first-class object
-在JS中函式是first-class object，什麼是first-class object？
+                內容只涵蓋到書中的Part1、2，後面的部分現階段看起來就吃力且比較不熟悉，可能之後再補上。這篇主要是紀錄書中使用的一些技巧，以及一些概念介紹。
+first-class object在JS中函式是first-class object，什麼是first-class object？
 
-可透過字面..
+可透過字面值(..
             </p>
         </div>
     </a>
@@ -526,34 +537,8 @@ first-class object
         
         <div class="post-content-preview">
             <p>
-                partial application 和 currying 是 functional programming中常見的東西，不過我沒學過FP就是了...
-而在JS又是如何實現的呢？
-網路上有滿多文章把這兩者混在一起解釋了，他們兩者都是將函式做轉換，但最後轉換出來的函式執行後的結果跟原函式是一樣的..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/2016/01/26/ec2同步本地端檔案/">
-        <h2 class="post-title">
-            ec2同步本地端檔案
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-01-26
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                一開始什麼都還不知道的時候，是先把檔案傳到github上，再從ec2裡clone到遠端主機那裡。這方法非常的麻煩，因為需不停的git push --&gt; git pull --&gt; git push ...，之後才知道有其他方法可以用...
-
-不過在此之前，先讓連線到ec2上的方法更簡單..
+                partial application 和 currying 是 functional programming中常見的東西，不過我沒學過FP就是了…而在JS又是如何實現的呢？
+網路上有滿多文章把這兩者混在一起解釋了，他們兩者都是將函式做轉換，但最後轉換出來的函式執行後的結果跟原函式是一樣的。經過..
             </p>
         </div>
     </a>
@@ -600,7 +585,7 @@ first-class object
                     
                     <h5><a href="/about/">Tan</a></h5>
                     
-                    <p>喜歡JS的前端</p>
+                    <p>Fronted Engineer</p>
                     
                     <hr>
                     <!-- SNS Link 社交 -->
@@ -653,6 +638,25 @@ first-class object
                 <div class="tags">
                     
                     
+                    
+                    
+                    <a href="/tags/#javascript" title="javascript"
+                       rel="8">javascript</a>
+                    
+                    
+                    
+                    <a href="/tags/#react" title="react"
+                       rel="6">react</a>
+                    
+                    
+                    
+                    <a href="/tags/#redux" title="redux"
+                       rel="4">redux</a>
+                    
+                    
+                    
+                    
+                    
                     <a href="/tags/#linux" title="linux"
                        rel="2">linux</a>
                     
@@ -667,23 +671,6 @@ first-class object
                        rel="2">ec2</a>
                     
                     
-                    
-                    
-                    
-                    <a href="/tags/#javascript" title="javascript"
-                       rel="8">javascript</a>
-                    
-                    
-                    
-                    
-                    
-                    <a href="/tags/#react" title="react"
-                       rel="6">react</a>
-                    
-                    
-                    
-                    <a href="/tags/#redux" title="redux"
-                       rel="4">redux</a>
                     
                     
                     
